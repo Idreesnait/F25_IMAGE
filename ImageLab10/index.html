@@ -10,17 +10,77 @@
         <img id="skyTex" src="summer-sky.jpg">
       </a-assets>
 
-      <!-- Your 360 sky -->
+      <!-- 360 sky -->
       <a-sky src="#skyTex"></a-sky>
 
-      <!-- Your original objects -->
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      
+      <!-- Sand ground -->
+      <a-plane position="0 0 0"
+               rotation="-90 0 0"
+               width="20"
+               height="20"
+               color="#F5DEB3">  <!-- sand-ish -->
+      </a-plane>
+
+      <!-- Beach towel (main rectangle) -->
+      <a-plane position="0 0.01 -3"
+               rotation="-90 0 0"
+               width="1.5"
+               height="3"
+               color="#FF6F91">
+      </a-plane>
+
+      <!-- Towel stripes -->
+      <a-plane position="0 0.012 -3.4"
+               rotation="-90 0 0"
+               width="1.5"
+               height="0.3"
+               color="#FFFFFF">
+      </a-plane>
+      <a-plane position="0 0.012 -2.6"
+               rotation="-90 0 0"
+               width="1.5"
+               height="0.3"
+               color="#FFFFFF">
+      </a-plane>
+      <a-plane position="0 0.012 -2.2"
+               rotation="-90 0 0"
+               width="1.5"
+               height="0.3"
+               color="#FFFFFF">
+      </a-plane>
+
+      <!-- Beach ball -->
+      <a-sphere position="1 0.4 -2.5"
+                radius="0.4"
+                color="#FFFFFF">
+      </a-sphere>
+
+      <!-- Colored "panels" on the ball (small overlapping shapes) -->
+      <a-sphere position="1.1 0.4 -2.5"
+                radius="0.25"
+                color="#FF4B4B">
+      </a-sphere>
+      <a-sphere position="0.9 0.4 -2.3"
+                radius="0.2"
+                color="#4BC0FF">
+      </a-sphere>
+      <a-sphere position="0.9 0.4 -2.7"
+                radius="0.2"
+                color="#FFE156">
+      </a-sphere>
+
+      <!-- Optional: tiny animation to make the ball wiggle -->
+      <a-animation
+        attribute="position"
+        dur="1500"
+        direction="alternate"
+        repeat="indefinite"
+        to="1 0.5 -2.5">
+      </a-animation>
+
       <!-- Camera so you can look around -->
       <a-entity camera look-controls position="0 1.6 0"></a-entity>
     </a-scene>
   </body>
 </html>
+
