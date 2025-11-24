@@ -117,52 +117,68 @@
   <a-sky color="#111111"></a-sky>
 
   <!-- =======================
-     HUB (OCTAGON) FIXED
+     SIMPLE HUB (BOX ROOM)
      ======================= -->
 <a-entity id="hub" position="0 0 0">
 
-  <!-- Floor / Ceiling -->
-  <a-circle radius="10" rotation="-90 0 0" src="#tex-marble"></a-circle>
-  <a-circle radius="10" rotation="90 0 0" position="0 4 0" src="#tex-marble"></a-circle>
+  <!-- Floor -->
+  <a-box
+    position="0 0 0"
+    width="20"
+    height="0.1"
+    depth="20"
+    material="src: #tex-marble">
+  </a-box>
 
-  <!-- Lights -->
+  <!-- Ceiling -->
+  <a-box
+    position="0 4 0"
+    width="20"
+    height="0.1"
+    depth="20"
+    material="src: #tex-marble">
+  </a-box>
+
+  <!-- Corner Pillars (4 total) -->
+  <!-- Front-Left -->
+  <a-box
+    position="-9 2 -9"
+    width="1"
+    height="4"
+    depth="1"
+    material="src: #tex-wood2">
+  </a-box>
+
+  <!-- Front-Right -->
+  <a-box
+    position="9 2 -9"
+    width="1"
+    height="4"
+    depth="1"
+    material="src: #tex-wood2">
+  </a-box>
+
+  <!-- Back-Left -->
+  <a-box
+    position="-9 2 9"
+    width="1"
+    height="4"
+    depth="1"
+    material="src: #tex-wood2">
+  </a-box>
+
+  <!-- Back-Right -->
+  <a-box
+    position="9 2 9"
+    width="1"
+    height="4"
+    depth="1"
+    material="src: #tex-wood2">
+  </a-box>
+
+  <!-- Lighting -->
   <a-entity light="type: ambient; intensity: 0.6"></a-entity>
-  <a-entity light="type: point; intensity: 1.0; distance: 40" position="0 3 0"></a-entity>
-
-  <!-- WALL TEMPLATE (each split into LEFT piece + RIGHT piece with a hole in middle) -->
-  <!-- Width of full wall = 8. Opening gap = 4. So left = 2 width, right = 2 width -->
-
-  <!-- NORTH (Room 1) angle 0° -->
-  <a-box position="-2 2 -10" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-  <a-box position="2  2 -10" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-
-  <!-- NORTHEAST (Room 2) angle 45° -->
-  <a-box position="5.07 2 -7.07" rotation="0 45 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-  <a-box position="9.07 2 -3.07" rotation="0 45 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-
-  <!-- EAST (Room 3) angle 90° -->
-  <a-box position="10 2 -2" rotation="0 90 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-  <a-box position="10 2  2" rotation="0 90 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-
-  <!-- SOUTHEAST (Room 4) angle 135° -->
-  <a-box position="9.07 2 3.07"  rotation="0 135 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-  <a-box position="5.07 2 7.07"  rotation="0 135 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-
-  <!-- SOUTH (Room 5) angle 180° -->
-  <a-box position="2  2 10" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-  <a-box position="-2 2 10" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-
-  <!-- SOUTHWEST (Room 6) angle 225° -->
-  <a-box position="-5.07 2 7.07" rotation="0 225 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-  <a-box position="-9.07 2 3.07" rotation="0 225 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-
-  <!-- WEST (Room 7) angle 270° -->
-  <a-box position="-10 2  2" rotation="0 270 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-  <a-box position="-10 2 -2" rotation="0 270 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-
-  <!-- NORTHWEST (Room 8) angle 315° -->
-  <a-box position="-9.07 2 -3.07" rotation="0 315 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
-  <a-box position="-5.07 2 -7.07" rotation="0 315 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+  <a-entity light="type: point; intensity: 1.2; distance: 40" position="0 3 0"></a-entity>
 
 </a-entity>
 
