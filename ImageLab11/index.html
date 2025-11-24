@@ -19,4 +19,264 @@
       <!-- Room 0 walls -->
       <a-plane position="0 3 -20" rotation="0 0 0" width="60" height="6" color="#ffffff"></a-plane>   <!-- back -->
       <a-plane position="0 3 20" rotation="0 180 0" width="60" height="6" color="#ffffff"></a-plane>  <!-- front -->
-      <a-plane position="-20 3 0
+      <a-plane position="-20 3 0" rotation="0 90 0" width="60" height="6" color="#ffffff"></a-plane>   <!-- left -->
+      <a-plane position="20 3 0" rotation="0 -90 0" width="60" height="6" color="#ffffff"></a-plane>  <!-- right -->
+
+      <!-- Global ambient light -->
+      <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+
+      <!-- Hub overhead light -->
+      <a-entity light="type: point; intensity: 0.8; color: #ffffff" position="0 8 0"></a-entity>
+
+      <!-- Room cover images in hub -->
+      <a-plane position="-10 3 -19.95" width="4.4" height="4.4" color="#000000"></a-plane>
+      <a-plane src="R1ICover.png" position="-10 3 -19.9" width="4" height="4"></a-plane>
+
+      <a-plane position="10 3 -19.95" width="4.4" height="4.4" color="#000000"></a-plane>
+      <a-plane src="R2ICover.png" position="10 3 -19.9" width="4" height="4"></a-plane>
+
+      <a-plane position="-10 3 19.95" rotation="0 180 0" width="4.4" height="4.4" color="#000000"></a-plane>
+      <a-plane src="R3ICover.png" position="-10 3 19.9" rotation="0 180 0" width="4" height="4"></a-plane>
+
+      <a-plane position="10 3 19.95" rotation="0 180 0" width="4.4" height="4.4" color="#000000"></a-plane>
+      <a-plane src="R4ICover.png" position="10 3 19.9" rotation="0 180 0" width="4" height="4"></a-plane>
+
+      <a-plane position="-19.95 3 -10" rotation="0 90 0" width="4.4" height="4.4" color="#000000"></a-plane>
+      <a-plane src="R5ICover.png" position="-19.9 3 -10" rotation="0 90 0" width="4" height="4"></a-plane>
+
+      <a-plane position="-19.95 3 10" rotation="0 90 0" width="4.4" height="4.4" color="#000000"></a-plane>
+      <a-plane src="R6ICover.png" position="-19.9 3 10" rotation="0 90 0" width="4" height="4"></a-plane>
+
+      <a-plane position="19.95 3 -10" rotation="0 -90 0" width="4.4" height="4.4" color="#000000"></a-plane>
+      <a-plane src="R7ICover.png" position="19.9 3 -10" rotation="0 -90 0" width="4" height="4"></a-plane>
+
+      <a-plane position="19.95 3 10" rotation="0 -90 0" width="4.4" height="4.4" color="#000000"></a-plane>
+      <a-plane src="R8ICover.png" position="19.9 3 10" rotation="0 -90 0" width="4" height="4"></a-plane>
+
+      <!-- Gallery rooms -->
+
+      <!-- Room 1 floor -->
+      <a-plane position="-15 0 -40" rotation="-90 0 0" width="12" height="12" color="#e6e6e6"></a-plane>
+      <!-- Room 1 walls -->
+      <a-plane position="-15 2 -46" rotation="0 0 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- back -->
+      <a-plane position="-15 2 -34" rotation="0 180 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- front -->
+      <a-plane position="-21 2 -40" rotation="0 90 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- left -->
+      <a-plane position="-9 2 -40" rotation="0 -90 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- right -->
+      <!-- Room 1 light -->
+      <a-entity light="type: point; intensity: 0.9; color: #ffd9b3" position="-15 4 -40"></a-entity>
+      <!-- Room 1 art (5 images) -->
+      <a-plane position="-18 2.5 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R1I1.png" position="-18 2.5 -45.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-15 2.5 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R1I2.png" position="-15 2.5 -45.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-12 2.5 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R1I3.png" position="-12 2.5 -45.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-18 1 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R1I4.png" position="-18 1 -45.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-15 1 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R1I5.png" position="-15 1 -45.9" width="2" height="2"></a-plane>
+
+      <!-- Room 2 floor -->
+      <a-plane position="15 0 -40" rotation="-90 0 0" width="12" height="12" color="#e6e6e6"></a-plane>
+      <!-- Room 2 walls -->
+      <a-plane position="15 2 -46" rotation="0 0 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- back -->
+      <a-plane position="15 2 -34" rotation="0 180 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- front -->
+      <a-plane position="9 2 -40" rotation="0 90 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- left -->
+      <a-plane position="21 2 -40" rotation="0 -90 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- right -->
+      <!-- Room 2 light -->
+      <a-entity light="type: point; intensity: 0.9; color: #b3e6ff" position="15 4 -40"></a-entity>
+      <!-- Room 2 art (8 images) -->
+      <a-plane position="12 2.5 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R2I1.png" position="12 2.5 -45.9" width="2" height="2"></a-plane>
+
+      <a-plane position="15 2.5 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R2I2.png" position="15 2.5 -45.9" width="2" height="2"></a-plane>
+
+      <a-plane position="18 2.5 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R2I3.png" position="18 2.5 -45.9" width="2" height="2"></a-plane>
+
+      <a-plane position="12 1 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R2I4.png" position="12 1 -45.9" width="2" height="2"></a-plane>
+
+      <a-plane position="15 1 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R2I5.png" position="15 1 -45.9" width="2" height="2"></a-plane>
+
+      <a-plane position="18 1 -45.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R2I6.png" position="18 1 -45.9" width="2" height="2"></a-plane>
+
+      <!-- extra images on side walls -->
+      <a-plane position="9.05 2 -40" rotation="0 90 0" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R2I7.png" position="9.1 2 -40" rotation="0 90 0" width="2" height="2"></a-plane>
+
+      <a-plane position="20.95 2 -40" rotation="0 -90 0" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R2I8.png" position="20.9 2 -40" rotation="0 -90 0" width="2" height="2"></a-plane>
+
+      <!-- Room 3 floor -->
+      <a-plane position="-15 0 40" rotation="-90 0 0" width="12" height="12" color="#e6e6e6"></a-plane>
+      <!-- Room 3 walls -->
+      <a-plane position="-15 2 34" rotation="0 180 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- back -->
+      <a-plane position="-15 2 46" rotation="0 0 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- front -->
+      <a-plane position="-21 2 40" rotation="0 90 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- left -->
+      <a-plane position="-9 2 40" rotation="0 -90 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- right -->
+      <!-- Room 3 light -->
+      <a-entity light="type: point; intensity: 0.9; color: #ffb3d9" position="-15 4 40"></a-entity>
+      <!-- Room 3 art (3 images) -->
+      <a-plane position="-18 2.5 34.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R3I1.png" position="-18 2.5 34.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="-15 2.5 34.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R3I2.png" position="-15 2.5 34.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="-12 2.5 34.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R3I3.png" position="-12 2.5 34.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <!-- Room 4 floor -->
+      <a-plane position="15 0 40" rotation="-90 0 0" width="12" height="12" color="#e6e6e6"></a-plane>
+      <!-- Room 4 walls -->
+      <a-plane position="15 2 34" rotation="0 180 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- back -->
+      <a-plane position="15 2 46" rotation="0 0 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- front -->
+      <a-plane position="9 2 40" rotation="0 90 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- left -->
+      <a-plane position="21 2 40" rotation="0 -90 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- right -->
+      <!-- Room 4 light -->
+      <a-entity light="type: point; intensity: 0.9; color: #c2ffb3" position="15 4 40"></a-entity>
+      <!-- Room 4 art (7 images) -->
+      <a-plane position="12 2.5 34.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R4I1.png" position="12 2.5 34.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="15 2.5 34.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R4I2.png" position="15 2.5 34.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="18 2.5 34.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R4I3.png" position="18 2.5 34.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="12 1 34.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R4I4.png" position="12 1 34.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="15 1 34.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R4I5.png" position="15 1 34.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="18 1 34.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R4I6.png" position="18 1 34.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="9.05 2 40" rotation="0 90 0" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R4I7.png" position="9.1 2 40" rotation="0 90 0" width="2" height="2"></a-plane>
+
+      <!-- Room 5 floor -->
+      <a-plane position="-40 0 -15" rotation="-90 0 0" width="12" height="12" color="#e6e6e6"></a-plane>
+      <!-- Room 5 walls -->
+      <a-plane position="-40 2 -21" rotation="0 0 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- back -->
+      <a-plane position="-40 2 -9" rotation="0 180 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- front -->
+      <a-plane position="-46 2 -15" rotation="0 90 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- left -->
+      <a-plane position="-34 2 -15" rotation="0 -90 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- right -->
+      <!-- Room 5 light -->
+      <a-entity light="type: point; intensity: 0.9; color: #fff0b3" position="-40 4 -15"></a-entity>
+      <!-- Room 5 art (9 images) -->
+      <a-plane position="-43 2.5 -20.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R5I1.png" position="-43 2.5 -20.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-40 2.5 -20.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R5I2.png" position="-40 2.5 -20.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-37 2.5 -20.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R5I3.png" position="-37 2.5 -20.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-43 1 -20.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R5I4.png" position="-43 1 -20.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-40 1 -20.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R5I5.png" position="-40 1 -20.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-37 1 -20.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R5I6.png" position="-37 1 -20.9" width="2" height="2"></a-plane>
+
+      <a-plane position="-45.95 2 -15" rotation="0 90 0" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R5I7.png" position="-45.9 2 -15" rotation="0 90 0" width="2" height="2"></a-plane>
+
+      <a-plane position="-34.05 2 -15" rotation="0 -90 0" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R5I8.png" position="-34.1 2 -15" rotation="0 -90 0" width="2" height="2"></a-plane>
+
+      <a-plane position="-45.95 1 -15" rotation="0 90 0" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R5I9.png" position="-45.9 1 -15" rotation="0 90 0" width="2" height="2"></a-plane>
+
+      <!-- Room 6 floor -->
+      <a-plane position="-40 0 15" rotation="-90 0 0" width="12" height="12" color="#e6e6e6"></a-plane>
+      <!-- Room 6 walls -->
+      <a-plane position="-40 2 9" rotation="0 180 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- back -->
+      <a-plane position="-40 2 21" rotation="0 0 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- front -->
+      <a-plane position="-46 2 15" rotation="0 90 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- left -->
+      <a-plane position="-34 2 15" rotation="0 -90 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- right -->
+      <!-- Room 6 light -->
+      <a-entity light="type: point; intensity: 0.9; color: #d1b3ff" position="-40 4 15"></a-entity>
+      <!-- Room 6 art (3 images) -->
+      <a-plane position="-43 2.5 9.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R6I1.png" position="-43 2.5 9.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="-40 2.5 9.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R6I2.png" position="-40 2.5 9.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="-37 2.5 9.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R6I3.png" position="-37 2.5 9.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <!-- Room 7 floor -->
+      <a-plane position="40 0 -15" rotation="-90 0 0" width="12" height="12" color="#e6e6e6"></a-plane>
+      <!-- Room 7 walls -->
+      <a-plane position="40 2 -21" rotation="0 0 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- back -->
+      <a-plane position="40 2 -9" rotation="0 180 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- front -->
+      <a-plane position="34 2 -15" rotation="0 90 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- left -->
+      <a-plane position="46 2 -15" rotation="0 -90 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- right -->
+      <!-- Room 7 light -->
+      <a-entity light="type: point; intensity: 0.9; color: #ffc2b3" position="40 4 -15"></a-entity>
+      <!-- Room 7 art (3 images) -->
+      <a-plane position="37 2.5 -20.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R7I1.png" position="37 2.5 -20.9" width="2" height="2"></a-plane>
+
+      <a-plane position="40 2.5 -20.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R7I2.png" position="40 2.5 -20.9" width="2" height="2"></a-plane>
+
+      <a-plane position="43 2.5 -20.95" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R7I3.png" position="43 2.5 -20.9" width="2" height="2"></a-plane>
+
+      <!-- Room 8 floor -->
+      <a-plane position="40 0 15" rotation="-90 0 0" width="12" height="12" color="#e6e6e6"></a-plane>
+      <!-- Room 8 walls -->
+      <a-plane position="40 2 9" rotation="0 180 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- back -->
+      <a-plane position="40 2 21" rotation="0 0 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- front -->
+      <a-plane position="34 2 15" rotation="0 90 0" width="12" height="4" color="#ffffff"></a-plane>   <!-- left -->
+      <a-plane position="46 2 15" rotation="0 -90 0" width="12" height="4" color="#ffffff"></a-plane>  <!-- right -->
+      <!-- Room 8 light -->
+      <a-entity light="type: point; intensity: 0.9; color: #b3fff0" position="40 4 15"></a-entity>
+      <!-- Room 8 art (9 images) -->
+      <a-plane position="37 2.5 9.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R8I1.png" position="37 2.5 9.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="40 2.5 9.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R8I2.png" position="40 2.5 9.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="43 2.5 9.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R8I3.png" position="43 2.5 9.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="37 1 9.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R8I4.png" position="37 1 9.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="40 1 9.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R8I5.png" position="40 1 9.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="43 1 9.05" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R8I6.png" position="43 1 9.1" width="2" height="2" rotation="0 180 0"></a-plane>
+
+      <a-plane position="34.05 2 15" rotation="0 90 0" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R8I7.png" position="34.1 2 15" rotation="0 90 0" width="2" height="2"></a-plane>
+
+      <a-plane position="45.95 2 15" rotation="0 -90 0" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R8I8.png" position="45.9 2 15" rotation="0 -90 0" width="2" height="2"></a-plane>
+
+      <a-plane position="34.05 1 15" rotation="0 90 0" width="2.2" height="2.2" color="#000000"></a-plane>
+      <a-plane src="R8I9.png" position="34.1 1 15" rotation="0 90 0" width="2" height="2"></a-plane>
+
+    </a-scene>
+  </body>
+</html>
