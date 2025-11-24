@@ -116,8 +116,9 @@
   <!-- Sky -->
   <a-sky color="#111111"></a-sky>
 
-  <!-- =======================
+ <!-- =======================
      SIMPLE HUB (BOX ROOM)
+     with CYLINDER PILLARS
      ======================= -->
 <a-entity id="hub" position="0 0 0">
 
@@ -139,42 +140,38 @@
     material="src: #tex-marble">
   </a-box>
 
-  <!-- Corner Pillars (4 total) -->
+  <!-- Corner Cylinders -->
   <!-- Front-Left -->
-  <a-box
+  <a-cylinder
     position="-9 2 -9"
-    width="1"
     height="4"
-    depth="1"
+    radius="0.6"
     material="src: #tex-wood2">
-  </a-box>
+  </a-cylinder>
 
   <!-- Front-Right -->
-  <a-box
+  <a-cylinder
     position="9 2 -9"
-    width="1"
     height="4"
-    depth="1"
+    radius="0.6"
     material="src: #tex-wood2">
-  </a-box>
+  </a-cylinder>
 
   <!-- Back-Left -->
-  <a-box
+  <a-cylinder
     position="-9 2 9"
-    width="1"
     height="4"
-    depth="1"
+    radius="0.6"
     material="src: #tex-wood2">
-  </a-box>
+  </a-cylinder>
 
   <!-- Back-Right -->
-  <a-box
+  <a-cylinder
     position="9 2 9"
-    width="1"
     height="4"
-    depth="1"
+    radius="0.6"
     material="src: #tex-wood2">
-  </a-box>
+  </a-cylinder>
 
   <!-- Lighting -->
   <a-entity light="type: ambient; intensity: 0.6"></a-entity>
