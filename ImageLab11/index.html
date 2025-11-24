@@ -1,105 +1,835 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>VR Test Gallery</title>
+    <meta charset="utf-8" />
+    <title>VR Art Gallery</title>
 
-    <!-- A-Frame -->
+    <!-- A-Frame Core -->
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
 
-    <!-- Physics system -->
-    <script src="https://cdn.jsdelivr.net/npm/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
+    <!-- Extra Components -->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+
+    <!-- Movement System: Float Up + Gravity Down (Option A) -->
+    <script>
+      AFRAME.registerComponent("float-controls", {
+        init: function () {
+          const el = this.el;
+          const data = { velocityY: 0, grounded: true };
+          let lastSpace = 0;
+
+          window.addEventListener("keydown", (e) => {
+            if (e.code === "Space") {
+              const now = performance.now();
+              const double = now - lastSpace < 200;
+              lastSpace = now;
+
+              if (!double) {
+                // float up slow
+                data.velocityY = 0.035;
+              } else {
+                // double tap → gravity drop
+                data.velocityY = -0.12;
+              }
+            }
+          });
+
+          this.data = data;
+        },
+
+        tick: function (time, delta) {
+          const el = this.el;
+          const d = this.data;
+
+          // apply vertical movement
+          const pos = el.getAttribute("position");
+          pos.y += d.velocityY;
+
+          // apply real gravity when rising
+          d.velocityY -= 0.002;
+
+          // ground level
+          if (pos.y < 1.6) {
+            pos.y = 1.6;
+            d.velocityY = 0;
+          }
+
+          el.setAttribute("position", pos);
+        },
+      });
+    </script>
+
+    <!-- FRAME COMPONENT (modern black frame) -->
+    <script>
+      AFRAME.registerComponent("frame", {
+        schema: {
+          width: { default: 1 },
+          height: { default: 1 },
+          depth: { default: 0.05 },
+        },
+        init: function () {
+          const d = this.data;
+          const frame = document.createElement("a-box");
+          frame.setAttribute("width", d.width + 0.15);
+          frame.setAttribute("height", d.height + 0.15);
+          frame.setAttribute("depth", d.depth);
+          frame.setAttribute("color", "#111111");
+
+          frame.setAttribute("position", "0 0 -0.03");
+          this.el.appendChild(frame);
+        },
+      });
+    </script>
+
+    <!-- MUSEUM PLAQUE -->
+    <script>
+      AFRAME.registerComponent("plaque", {
+        schema: {},
+        init: function () {
+          const plaque = document.createElement("a-plane");
+          plaque.setAttribute("width", "1.1");
+          plaque.setAttribute("height", "0.45");
+          plaque.setAttribute("color", "#ffffff");
+          plaque.setAttribute("material", "shader: flat");
+
+          const border = document.createElement("a-box");
+          border.setAttribute("position", "0 0 -0.02");
+          border.setAttribute("width", "1.12");
+          border.setAttribute("height", "0.47");
+          border.setAttribute("depth", "0.01");
+          border.setAttribute("color", "#cccccc");
+
+          const txt = document.createElement("a-entity");
+          txt.setAttribute("text", "value: add text here; width: 2; color: #000;");
+          txt.setAttribute("position", "-0.5 0.05 0.01");
+
+          this.el.appendChild(border);
+          this.el.appendChild(plaque);
+          this.el.appendChild(txt);
+        },
+      });
+    </script>
+
+    <!-- GLASS BOX for pedestal objects -->
+    <script>
+      AFRAME.registerComponent("glass-box", {
+        schema: {
+          width: { default: 1 },
+          height: { default: 1 },
+          depth: { default: 1 },
+        },
+        init: function () {
+          const d = this.data;
+          const box = document.createElement("a-box");
+          box.setAttribute("width", d.width);
+          box.setAttribute("height", d.height);
+          box.setAttribute("depth", d.depth);
+          box.setAttribute(
+            "material",
+            "color: #ffffff; opacity: 0.12; transparent: true;"
+          );
+          this.el.appendChild(box);
+        },
+      });
+    </script>
+
+    <!-- SIMPLE PLANT (low poly) -->
+    <script>
+      AFRAME.registerComponent("plant", {
+        init: function () {
+          const stem = document.createElement("a-cylinder");
+          stem.setAttribute("color", "#4c7a3d");
+          stem.setAttribute("radius", "0.05");
+          stem.setAttribute("height", "0.6");
+          stem.setAttribute("position", "0 0.3 0");
+
+          const leaf1 = document.createElement("a-sphere");
+          leaf1.setAttribute("color", "#6fae63");
+          leaf1.setAttribute("radius", "0.2");
+          leaf1.setAttribute("position", "0.15 0.6 0");
+
+          const leaf2 = document.createElement("a-sphere");
+          leaf2.setAttribute("color", "#6fae63");
+          leaf2.setAttribute("radius", "0.2");
+          leaf2.setAttribute("position", "-0.15 0.6 0");
+
+          this.el.appendChild(stem);
+          this.el.appendChild(leaf1);
+          this.el.appendChild(leaf2);
+        },
+      });
+    </script>
+
   </head>
 
   <body>
-    <a-scene physics="gravity: -9.8">
+    <!-- GLOBAL SCENE SETUP -->
+    <a-scene renderer="antialias: true; colorManagement: true">
+      
+      <!-- Sky -->
+      <a-sky color="#e7e7e7"></a-sky>
 
-      <!-- PLAYER WITH COLLIDER -->
-      <a-entity id="rig"
-        dynamic-body="shape: capsule; height: 1.6; radius: 0.3;"
-        position="0 1.6 0">
-        <a-entity camera wasd-controls look-controls></a-entity>
+      <!-- Player Rig with float controls -->
+      <a-entity id="player" float-controls position="0 1.6 0">
+        <a-entity 
+          camera 
+          wasd-controls="acceleration: 55" 
+          look-controls="pointerLockEnabled: true">
+        </a-entity>
       </a-entity>
 
-      <!-- GROUND -->
-      <a-plane static-body color="#eeeeee"
-        position="0 0 0" rotation="-90 0 0"
-        width="40" height="40"></a-plane>
+      <!-- Ambient light -->
+      <a-entity light="type: ambient; intensity: 0.45"></a-entity>
 
-      <!-- SKY -->
-      <a-sky color="#f4f4f4"></a-sky>
+      <!-- Concrete brutalist texture placeholder -->
+      <!-- (You can replace these later with real images if desired) -->
+      <a-assets>
+        <img id="concrete" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
+      </a-assets>
 
-      <!-- GLOBAL LIGHT -->
-      <a-entity light="type: ambient; intensity: 0.5"></a-entity>
-      <a-entity light="type: point; intensity: 0.9; color: #ffffff"
-                position="0 5 0"></a-entity>
+      <!-- FLOOR (shared global ground plane) -->
+      <a-plane
+        position="0 0 0"
+        rotation="-90 0 0"
+        width="200"
+        height="200"
+        src="#concrete">
+      </a-plane>
 
-      <!-- =============================== -->
-      <!-- ROOM 0 (HUB)                     -->
-      <!-- =============================== -->
-
-      <!-- hub walls (solid) -->
-      <a-plane static-body color="#ffffff"
-        position="0 2 -6" rotation="0 0 0"
-        width="12" height="4"></a-plane>
-
-      <a-plane static-body color="#ffffff"
-        position="0 2 6" rotation="0 180 0"
-        width="12" height="4"></a-plane>
-
-      <a-plane static-body color="#ffffff"
-        position="-6 2 0" rotation="0 90 0"
-        width="12" height="4"></a-plane>
-
-      <a-plane static-body color="#ffffff"
-        position="6 2 0" rotation="0 -90 0"
-        width="12" height="4"></a-plane>
-
-      <!-- DOORWAY TO ROOM 1 -->
-      <!-- We leave a gap: no plane in the center of the front wall -->
-      <!-- Door label -->
-      <a-entity text="value: Room 1 →; color:#222; width:4"
-                position="0 3.5 -5.2"></a-entity>
-
-      <!-- =============================== -->
-      <!-- ROOM 1 (TEST ROOM)              -->
-      <!-- =============================== -->
-
-      <!-- room 1 floor -->
-      <a-plane static-body color="#e6e6ff"
-        position="0 0 -15" rotation="-90 0 0"
-        width="12" height="12"></a-plane>
-
-      <!-- room 1 walls -->
-      <a-plane static-body color="#ffffff"
-        position="0 2 -21" rotation="0 0 0"
-        width="12" height="4"></a-plane> <!-- back -->
-
-      <a-plane static-body color="#ffffff"
-        position="0 2 -9" rotation="0 180 0"
-        width="12" height="4"></a-plane> <!-- front -->
-
-      <a-plane static-body color="#ffffff"
-        position="-6 2 -15" rotation="0 90 0"
-        width="12" height="4"></a-plane> <!-- left -->
-
-      <a-plane static-body color="#ffffff"
-        position="6 2 -15" rotation="0 -90 0"
-        width="12" height="4"></a-plane> <!-- right -->
-
-      <!-- room 1 light -->
-      <a-entity light="type: point; intensity: 0.8; color:#d0d0ff"
-                position="0 4 -15"></a-entity>
-
-      <!-- test image on the back wall (non-stretched) -->
-      <a-image src="Drawings for VR/R1I1.png"
-               position="0 2 -20.9"
-               scale="1.5 1.5 1.5"></a-image>
-
-      <!-- label -->
-      <a-entity text="value: Test Art; color:#222; width:4"
-                position="-1 1 -20.5"></a-entity>
+      <!-- ============================= -->
+      <!-- THE REST OF THE GALLERY WILL -->
+      <!-- BE INSERTED IN PARTS 2, 3, 4 -->
+      <!-- ============================= -->
 
     </a-scene>
   </body>
 </html>
+<!-- =============================== -->
+<!-- ROOM 0 — HUB                    -->
+<!-- =============================== -->
+
+<!-- Hub Lighting -->
+<a-entity light="type: point; intensity: 1.0; color: #ffffff" position="0 4 0"></a-entity>
+<a-entity light="type: ambient; intensity: 0.35"></a-entity>
+
+<!-- Hub Center Carpet -->
+<a-plane 
+  position="0 0.05 0"
+  rotation="-90 0 0"
+  width="10"
+  height="10"
+  color="#d8d3c4">
+</a-plane>
+
+<!-- Hub Walls (Thick Brutalist) -->
+<!-- Front Wall -->
+<a-box color="#e8e6e3" depth="1" height="4" width="20" position="0 2 -10"></a-box>
+
+<!-- Back Wall -->
+<a-box color="#e8e6e3" depth="1" height="4" width="20" position="0 2 10"></a-box>
+
+<!-- Left Wall -->
+<a-box color="#e8e6e3" depth="1" height="4" width="20" rotation="0 90 0" position="-10 2 0"></a-box>
+
+<!-- Right Wall -->
+<a-box color="#e8e6e3" depth="1" height="4" width="20" rotation="0 90 0" position="10 2 0"></a-box>
+
+<!-- Ceiling -->
+<a-plane 
+  position="0 4 0"
+  rotation="90 0 0"
+  width="20"
+  height="20"
+  color="#f5f4f2">
+</a-plane>
+
+<!-- =============================== -->
+<!-- 8 DOORWAYS                       -->
+<!-- =============================== -->
+
+<!-- DOORWAY POSITIONS (each leads to a different room) -->
+<!-- Door 1 (Room 1) – Front wall center-left -->
+<a-box color="#e8e6e3" width="3" height="4" depth="0.5" position="-5 2 -9.75"></a-box>
+<a-image src="Drawings for VR/R1Cover.png" position="-5 2 -9.2" width="2" height="2"></a-image>
+
+<!-- Door 2 (Room 2) – Front wall center-right -->
+<a-box color="#e8e6e3" width="3" height="4" depth="0.5" position="5 2 -9.75"></a-box>
+
+<!-- Door 3 (Room 3) – Right wall upper -->
+<a-box color="#e8e6e3" width="3" height="4" depth="0.5" rotation="0 -90 0" position="9.75 2 -5"></a-box>
+<a-image src="Drawings for VR/R3ICover.png" rotation="0 -90 0" position="9.2 2 -5" width="2" height="2"></a-image>
+
+<!-- Door 4 (Room 4) – Right wall lower -->
+<a-box color="#e8e6e3" width="3" height="4" depth="0.5" rotation="0 -90 0" position="9.75 2 5"></a-box>
+<a-image src="Drawings for VR/R4ICover.png" rotation="0 -90 0" position="9.2 2 5" width="2" height="2"></a-image>
+
+<!-- Door 5 (Room 5) – Back wall center-left -->
+<a-box color="#e8e6e3" width="3" height="4" depth="0.5" position="-5 2 9.75"></a-box>
+<a-image src="Drawings for VR/R5ICover.png" position="-5 2 9.2" width="2" height="2"></a-image>
+
+<!-- Door 6 (Room 6) – Back wall center-right -->
+<a-box color="#e8e6e3" width="3" height="4" depth="0.5" position="5 2 9.75"></a-box>
+<a-image src="Drawings for VR/R6ICover.png" position="5 2 9.2" width="2" height="2"></a-image>
+
+<!-- Door 7 (Room 7) – Left wall upper -->
+<a-box color="#e8e6e3" width="3" height="4" depth="0.5" rotation="0 90 0" position="-9.75 2 -5"></a-box>
+<a-image src="Drawings for VR/R7ICover.png" rotation="0 90 0" position="-9.2 2 -5" width="2" height="2"></a-image>
+
+<!-- Door 8 (Room 8) – Left wall lower -->
+<a-box color="#e8e6e3" width="3" height="4" depth="0.5" rotation="0 90 0" position="-9.75 2 5"></a-box>
+
+<!-- =============================== -->
+<!-- HUB DECOR                        -->
+<!-- =============================== -->
+
+<!-- Couch 1 -->
+<a-box color="#c7c3bc" depth="2" height="0.8" width="4" position="0 0.4 4.5"></a-box>
+
+<!-- Couch 2 -->
+<a-box color="#c7c3bc" depth="2" height="0.8" width="4" position="0 0.4 -4.5"></a-box>
+
+<!-- Couch backs -->
+<a-box color="#b9b5af" depth="0.5" height="1.2" width="4" position="0 1.2 5.25"></a-box>
+<a-box color="#b9b5af" depth="0.5" height="1.2" width="4" position="0 1.2 -5.25"></a-box>
+
+<!-- Plants in pots -->
+<a-cylinder color="#6f6f6f" radius="0.4" height="0.3" position="3 0.15 3"></a-cylinder>
+<a-entity plant position="3 0.6 3"></a-entity>
+
+<a-cylinder color="#6f6f6f" radius="0.4" height="0.3" position="-3 0.15 -3"></a-cylinder>
+<a-entity plant position="-3 0.6 -3"></a-entity>
+
+<!-- Vines climbing wall -->
+<a-plane 
+  position="0 2 -10.2" 
+  rotation="0 0 0"
+  width="12"
+  height="4"
+  color="#6fae63"
+  opacity="0.18">
+</a-plane>
+
+<!-- ======================================= -->
+<!-- ROOM 1 — 5 artworks, pastel pink         -->
+<!-- ======================================= -->
+
+<!-- Room 1 Offset (placed behind Door 1) -->
+<a-entity id="room1" position="0 0 -25">
+
+  <!-- Room 1 Lighting -->
+  <a-entity light="type: point; intensity: 0.9; color: #ffd8e8" position="0 3 0"></a-entity>
+
+  <!-- Room 1 Floor -->
+  <a-plane rotation="-90 0 0" width="20" height="20" color="#ffe9f2" position="0 0.03 0"></a-plane>
+
+  <!-- Walls (thick) -->
+  <a-box color="#f8dce8" width="20" height="4" depth="0.8" position="0 2 -10"></a-box>
+  <a-box color="#f8dce8" width="20" height="4" depth="0.8" position="0 2 10"></a-box>
+  <a-box color="#f8dce8" width="20" height="4" depth="0.8" rotation="0 90 0" position="-10 2 0"></a-box>
+  <a-box color="#f8dce8" width="20" height="4" depth="0.8" rotation="0 90 0" position="10 2 0"></a-box>
+
+  <!-- Ceiling -->
+  <a-plane width="20" height="20" rotation="90 0 0" color="#fbe7ef" position="0 4 0"></a-plane>
+
+  <!-- ART LAYOUT — asymmetrical gallery layout -->
+
+  <!-- Artwork 1 (center back wall) -->
+  <a-entity position="0 2 -9.5">
+    <a-image src="Drawings for VR/R1I1.png" scale="1.5 1.5 1"></a-image>
+    <a-entity plaque position="0 -1 0"></a-entity>
+  </a-entity>
+
+  <!-- Artwork 2 (left wall high) -->
+  <a-entity position="-9.5 2.5 0" rotation="0 90 0">
+    <a-image src="Drawings for VR/R1I2.png" scale="1.2 1.2 1"></a-image>
+    <a-entity plaque position="0 -1 0"></a-entity>
+  </a-entity>
+
+  <!-- Artwork 3 (right wall low, pedestal) -->
+  <a-entity position="9.5 1 1" rotation="0 -90 0">
+    <a-box color="#c0bfc0" width="1.2" height="0.8" depth="1.2"></a-box>
+    <a-entity glass-box width="1" height="1" depth="1" position="0 1 0"></a-entity>
+    <a-image src="Drawings for VR/R1I3.png" position="0 1 0.01" scale="0.9 0.9 1"></a-image>
+    <a-entity plaque position="0 2 0"></a-entity>
+  </a-entity>
+
+  <!-- Artwork 4 (angled floating piece) -->
+  <a-entity rotation="0 20 0" position="-3 2 7">
+    <a-image src="Drawings for VR/R1I4.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1 0"></a-entity>
+  </a-entity>
+
+  <!-- Artwork 5 (near entrance) -->
+  <a-entity position="3 1.8 8">
+    <a-image src="Drawings for VR/R1I5.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1 0"></a-entity>
+  </a-entity>
+
+  <!-- Plants -->
+  <a-cylinder color="#7a7a7a" radius="0.5" height="0.2" position="6 0.1 -6"></a-cylinder>
+  <a-entity plant position="6 0.7 -6"></a-entity>
+
+</a-entity>
+
+<!-- ======================================= -->
+<!-- ROOM 2 — 8 artworks, pastel blue        -->
+<!-- ======================================= -->
+
+<a-entity id="room2" position="0 0 -55">
+
+  <!-- Lighting -->
+  <a-entity light="type: point; intensity: 0.85; color: #c9e7ff" position="0 3 0"></a-entity>
+
+  <!-- Floor -->
+  <a-plane rotation="-90 0 0" width="20" height="20" color="#e5f3ff" position="0 0.03 0"></a-plane>
+
+  <!-- Walls -->
+  <a-box color="#d7ecff" width="20" height="4" depth="0.8" position="0 2 -10"></a-box>
+  <a-box color="#d7ecff" width="20" height="4" depth="0.8" position="0 2 10"></a-box>
+  <a-box color="#d7ecff" width="20" height="4" depth="0.8" rotation="0 90 0" position="-10 2 0"></a-box>
+  <a-box color="#d7ecff" width="20" height="4" depth="0.8" rotation="0 90 0" position="10 2 0"></a-box>
+
+  <!-- Ceiling -->
+  <a-plane width="20" height="20" rotation="90 0 0" color="#eef7ff" position="0 4 0"></a-plane>
+
+  <!-- 8 Artworks arranged as a zig-zag walk-through -->
+
+  <!-- Loop-like placement -->
+  <!-- R2I1 -->
+  <a-entity position="-7 2 -8">
+    <a-image src="Drawings for VR/R2I1.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1 0"></a-entity>
+  </a-entity>
+
+  <!-- R2I2 -->
+  <a-entity position="-9.5 2 0" rotation="0 90 0">
+    <a-image src="Drawings for VR/R2I2.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1 0"></a-entity>
+  </a-entity>
+
+  <!-- R2I3 -->
+  <a-entity position="-7 1.8 8">
+    <a-image src="Drawings for VR/R2I3.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R2I4 pedestal -->
+  <a-entity position="-1 1 -4">
+    <a-box color="#bfc5ce" width="1.5" height="0.8" depth="1.5"></a-box>
+    <a-entity glass-box width="1.3" height="1" depth="1.3" position="0 1 0"></a-entity>
+    <a-image src="Drawings for VR/R2I4.png" position="0 1 0.02" scale="1 1 1"></a-image>
+    <a-entity plaque position="0 2 0"></a-entity>
+  </a-entity>
+
+  <!-- R2I5 -->
+  <a-entity position="3 2 -8">
+    <a-image src="Drawings for VR/R2I5.png" scale="1.2 1.2 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R2I6 -->
+  <a-entity position="9.5 2 0" rotation="0 -90 0">
+    <a-image src="Drawings for VR/R2I6.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1 0"></a-entity>
+  </a-entity>
+
+  <!-- R2I7 -->
+  <a-entity position="3 2 8">
+    <a-image src="Drawings for VR/R2I7.png" scale="1.35 1.35 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R2I8 (center) -->
+  <a-entity position="0 2 0">
+    <a-image src="Drawings for VR/R2I8.png" scale="2 1.8 1"></a-image>
+    <a-entity plaque position="0 -1.3"></a-entity>
+  </a-entity>
+
+  <!-- Plants -->
+  <a-cylinder color="#7e7e7e" radius="0.5" height="0.25" position="6 0.1 -6"></a-cylinder>
+  <a-entity plant position="6 0.7 -6"></a-entity>
+
+</a-entity>
+
+<!-- ======================================= -->
+<!-- ROOM 3 — 3 artworks, pastel mint        -->
+<!-- ======================================= -->
+
+<a-entity id="room3" position="25 0 -25">
+
+  <!-- Lighting -->
+  <a-entity light="type: point; intensity: 0.9; color: #d7ffe6" position="0 3 0"></a-entity>
+
+  <!-- Floor -->
+  <a-plane rotation="-90 0 0" width="20" height="20" color="#ecfff5" position="0 0.03 0"></a-plane>
+
+  <!-- Walls -->
+  <a-box color="#dfffee" width="20" height="4" depth="0.8" position="0 2 -10"></a-box>
+  <a-box color="#dfffee" width="20" height="4" depth="0.8" position="0 2 10"></a-box>
+  <a-box color="#dfffee" width="20" height="4" depth="0.8" rotation="0 90 0" position="-10 2 0"></a-box>
+  <a-box color="#dfffee" width="20" height="4" depth="0.8" rotation="0 90 0" position="10 2 0"></a-box>
+
+  <!-- Ceiling -->
+  <a-plane width="20" height="20" rotation="90 0 0" color="#f4fff9" position="0 4 0"></a-plane>
+
+  <!-- Art (triangular layout) -->
+
+  <!-- R3I1 -->
+  <a-entity position="0 2 -8">
+    <a-image src="Drawings for VR/R3I1.png" scale="1.6 1.6 1"></a-image>
+    <a-entity plaque position="0 -1 0"></a-entity>
+  </a-entity>
+
+  <!-- R3I2 -->
+  <a-entity position="-7 2 4">
+    <a-image src="Drawings for VR/R3I2.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1">
+    </a-entity>
+  </a-entity>
+
+  <!-- R3I3 pedestal -->
+  <a-entity position="7 1 4">
+    <a-box color="#b5d8c5" width="1.5" height="0.8" depth="1.5"></a-box>
+    <a-entity glass-box width="1.3" height="1" depth="1.3" position="0 1 0"></a-entity>
+    <a-image src="Drawings for VR/R3I3.png" position="0 1 0.02" scale="1 1 1"></a-image>
+    <a-entity plaque position="0 2"></a-entity>
+  </a-entity>
+
+</a-entity>
+
+<!-- ======================================= -->
+<!-- ROOM 4 — 7 artworks, pastel lavender    -->
+<!-- ======================================= -->
+
+<a-entity id="room4" position="-25 0 -25">
+
+  <!-- Lighting -->
+  <a-entity light="type: point; intensity: 0.95; color: #ede3ff" position="0 3 0"></a-entity>
+
+  <!-- Floor -->
+  <a-plane rotation="-90 0 0" width="20" height="20" color="#f7f2ff" position="0 0.03 0"></a-plane>
+
+  <!-- Walls -->
+  <a-box color="#e9ddff" width="20" height="4" depth="0.8" position="0 2 -10"></a-box>
+  <a-box color="#e9ddff" width="20" height="4" depth="0.8" position="0 2 10"></a-box>
+  <a-box color="#e9ddff" width="20" height="4" depth="0.8" rotation="0 90 0" position="-10 2 0"></a-box>
+  <a-box color="#e9ddff" width="20" height="4" depth="0.8" rotation="0 90 0" position="10 2 0"></a-box>
+
+  <!-- Ceiling -->
+  <a-plane width="20" height="20" rotation="90 0 0" color="#f4ecff" position="0 4 0"></a-plane>
+
+  <!-- 7 artworks arranged like a spiral path -->
+
+  <!-- R4I1 -->
+  <a-entity position="0 2 -8">
+    <a-image src="Drawings for VR/R4I1.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R4I2 -->
+  <a-entity position="-8 2 -3">
+    <a-image src="Drawings for VR/R4I2.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R4I3 pedestal -->
+  <a-entity position="-7 1 5">
+    <a-box color="#cdc4e8" width="1.5" height="0.8" depth="1.5"></a-box>
+    <a-entity glass-box width="1.3" height="1" depth="1.3" position="0 1 0"></a-entity>
+    <a-image src="Drawings for VR/R4I3.png" position="0 1 0.02" scale="1 1 1"></a-image>
+    <a-entity plaque position="0 2"></a-entity>
+  </a-entity>
+
+  <!-- R4I4 -->
+  <a-entity position="0 2 8">
+    <a-image src="Drawings for VR/R4I4.png" scale="1.35 1.35 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R4I5 -->
+  <a-entity position="8 2 3">
+    <a-image src="Drawings for VR/R4I5.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R4I6 -->
+  <a-entity position="6 2 -5">
+    <a-image src="Drawings for VR/R4I6.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R4I7 (center masterpiece) -->
+  <a-entity position="0 2 0">
+    <a-image src="Drawings for VR/R4I7.png" scale="2 2 1"></a-image>
+    <a-entity plaque position="0 -1.3"></a-entity>
+  </a-entity>
+
+</a-entity>
+
+<!-- ======================================= -->
+<!-- ROOM 5 — 9 artworks, warm pastel orange  -->
+<!-- ======================================= -->
+
+<a-entity id="room5" position="0 0 30">
+
+  <!-- Lighting -->
+  <a-entity light="type: point; intensity: 0.9; color: #ffe7c7" position="0 3 0"></a-entity>
+
+  <!-- Floor -->
+  <a-plane rotation="-90 0 0" width="20" height="20" color="#fff1df" position="0 0.03 0"></a-plane>
+
+  <!-- Walls -->
+  <a-box color="#fee4c7" width="20" height="4" depth="0.8" position="0 2 -10"></a-box>
+  <a-box color="#fee4c7" width="20" height="4" depth="0.8" position="0 2 10"></a-box>
+  <a-box color="#fee4c7" width="20" height="4" depth="0.8" rotation="0 90 0" position="-10 2 0"></a-box>
+  <a-box color="#fee4c7" width="20" height="4" depth="0.8" rotation="0 90 0" position="10 2 0"></a-box>
+
+  <!-- Ceiling -->
+  <a-plane width="20" height="20" rotation="90 0 0" color="#fff4e6" position="0 4 0"></a-plane>
+
+  <!-- Art layout: circular walk path -->
+
+  <!-- R5I1 -->
+  <a-entity position="0 2 -8">
+    <a-image src="Drawings for VR/R5I1.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R5I2 -->
+  <a-entity position="-6 2 -6">
+    <a-image src="Drawings for VR/R5I2.png" scale="1.35 1.35 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R5I3 -->
+  <a-entity position="-8 2 0" rotation="0 90 0">
+    <a-image src="Drawings for VR/R5I3.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R5I4 -->
+  <a-entity position="-6 2 6">
+    <a-image src="Drawings for VR/R5I4.png" scale="1.35 1.35 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R5I5 (center masterpiece) -->
+  <a-entity position="0 2 0">
+    <a-image src="Drawings for VR/R5I5.png" scale="2 2 1"></a-image>
+    <a-entity plaque position="0 -1.3"></a-entity>
+  </a-entity>
+
+  <!-- R5I6 -->
+  <a-entity position="6 2 -6">
+    <a-image src="Drawings for VR/R5I6.png" scale="1.35 1.35 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R5I7 -->
+  <a-entity position="8 2 0" rotation="0 -90 0">
+    <a-image src="Drawings for VR/R5I7.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R5I8 -->
+  <a-entity position="6 2 6">
+    <a-image src="Drawings for VR/R5I8.png" scale="1.35 1.35 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R5I9 (pedestal) -->
+  <a-entity position="0 1 -3">
+    <a-box color="#f1d6b0" width="1.4" height="0.8" depth="1.4"></a-box>
+    <a-entity glass-box width="1.2" height="1" depth="1.2" position="0 1 0"></a-entity>
+    <a-image src="Drawings for VR/R5I9.png" position="0 1 0.02" scale="1 1 1"></a-image>
+    <a-entity plaque position="0 2"></a-entity>
+  </a-entity>
+
+  <!-- Plants -->
+  <a-cylinder color="#7e7e7e" radius="0.5" height="0.25" position="7 0.1 -7"></a-cylinder>
+  <a-entity plant position="7 0.7 -7"></a-entity>
+
+</a-entity>
+
+<!-- ======================================= -->
+<!-- ROOM 6 — 3 artworks, pastel green-blue   -->
+<!-- ======================================= -->
+
+<a-entity id="room6" position="30 0 30">
+
+  <!-- Lighting -->
+  <a-entity light="type: point; intensity: 1; color: #d3fff4" position="0 3 0"></a-entity>
+
+  <!-- Floor -->
+  <a-plane rotation="-90 0 0" width="20" height="20" color="#e9fffa" position="0 0.03 0"></a-plane>
+
+  <!-- Walls -->
+  <a-box color="#d9fff4" width="20" height="4" depth="0.8" position="0 2 -10"></a-box>
+  <a-box color="#d9fff4" width="20" height="4" depth="0.8" position="0 2 10"></a-box>
+  <a-box color="#d9fff4" width="20" height="4" depth="0.8" rotation="0 90 0" position="-10 2 0"></a-box>
+  <a-box color="#d9fff4" width="20" height="4" depth="0.8" rotation="0 90 0" position="10 2 0"></a-box>
+
+  <!-- Ceiling -->
+  <a-plane width="20" height="20" rotation="90 0 0" color="#f3fffb" position="0 4 0"></a-plane>
+
+  <!-- Triad layout -->
+
+  <!-- R6I1 -->
+  <a-entity position="0 2 -8">
+    <a-image src="Drawings for VR/R6I1.png" scale="1.6 1.6 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R6I2 -->
+  <a-entity position="-7 2 3">
+    <a-image src="Drawings for VR/R6I2.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R6I3 (pedestal) -->
+  <a-entity position="7 1 3">
+    <a-box color="#c7f4eb" width="1.4" height="0.8" depth="1.4"></a-box>
+    <a-entity glass-box width="1.2" height="1" depth="1.2" position="0 1 0"></a-entity>
+    <a-image src="Drawings for VR/R6I3.png" position="0 1 0.02" scale="1 1 1"></a-image>
+    <a-entity plaque position="0 2"></a-entity>
+  </a-entity>
+
+  <!-- Plant -->
+  <a-cylinder color="#7e7e7e" radius="0.5" height="0.25" position="6 0.1 -6"></a-cylinder>
+  <a-entity plant position="6 0.7 -6"></a-entity>
+
+</a-entity>
+
+<!-- ======================================= -->
+<!-- ROOM 7 — 3 artworks, pastel rose-gray    -->
+<!-- ======================================= -->
+
+<a-entity id="room7" position="-30 0 30">
+
+  <!-- Lighting -->
+  <a-entity light="type: point; intensity: 0.9; color: #ffd4d9" position="0 3 0"></a-entity>
+
+  <!-- Floor -->
+  <a-plane rotation="-90 0 0" width="20" height="20" color="#ffecee" position="0 0.03 0"></a-plane>
+
+  <!-- Walls -->
+  <a-box color="#fee3e6" width="20" height="4" depth="0.8" position="0 2 -10"></a-box>
+  <a-box color="#fee3e6" width="20" height="4" depth="0.8" position="0 2 10"></a-box>
+  <a-box color="#fee3e6" width="20" height="4" depth="0.8" rotation="0 90 0" position="-10 2 0"></a-box>
+  <a-box color="#fee3e6" width="20" height="4" depth="0.8" rotation="0 90 0" position="10 2 0"></a-box>
+
+  <!-- Ceiling -->
+  <a-plane width="20" height="20" rotation="90 0 0" color="#fff1f3" position="0 4 0"></a-plane>
+
+  <!-- Triangle layout -->
+
+  <!-- R7I1 -->
+  <a-entity position="0 2 -8">
+    <a-image src="Drawings for VR/R7I1.png" scale="1.6 1.6 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R7I2 -->
+  <a-entity position="-7 2 3">
+    <a-image src="Drawings for VR/R7I2.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R7I3 pedestal -->
+  <a-entity position="7 1 3">
+    <a-box color="#e9c6cb" width="1.4" height="0.8" depth="1.4"></a-box>
+    <a-entity glass-box width="1.2" height="1" depth="1.2" position="0 1 0"></a-entity>
+    <a-image src="Drawings for VR/R7I3.png" position="0 1 0.02" scale="1 1 1"></a-image>
+    <a-entity plaque position="0 2"></a-entity>
+  </a-entity>
+
+  <!-- Plants -->
+  <a-cylinder color="#7e7e7e" radius="0.5" height="0.25" position="-6 0.1 -6"></a-cylinder>
+  <a-entity plant position="-6 0.7 -6"></a-entity>
+
+</a-entity>
+
+<!-- ======================================= -->
+<!-- ROOM 8 — 9 artworks, pastel teal         -->
+<!-- ======================================= -->
+
+<a-entity id="room8" position="0 0 60">
+
+  <!-- Lighting -->
+  <a-entity light="type: point; intensity: 1; color: #dbfff8" position="0 3 0"></a-entity>
+
+  <!-- Floor -->
+  <a-plane rotation="-90 0 0" width="20" height="20" color="#edfffb" position="0 0.03 0"></a-plane>
+
+  <!-- Walls -->
+  <a-box color="#d9fff9" width="20" height="4" depth="0.8" position="0 2 -10"></a-box>
+  <a-box color="#d9fff9" width="20" height="4" depth="0.8" position="0 2 10"></a-box>
+  <a-box color="#d9fff9" width="20" height="4" depth="0.8" rotation="0 90 0" position="-10 2 0"></a-box>
+  <a-box color="#d9fff9" width="20" height="4" depth="0.8" rotation="0 90 0" position="10 2 0"></a-box>
+
+  <!-- Ceiling -->
+  <a-plane width="20" height="20" rotation="90 0 0" color="#f2fffd" position="0 4 0"></a-plane>
+
+  <!-- Spiral layout around walls -->
+
+  <!-- R8I1 -->
+  <a-entity position="0 2 -8">
+    <a-image src="Drawings for VR/R8I1.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R8I2 -->
+  <a-entity position="-6 2 -6">
+    <a-image src="Drawings for VR/R8I2.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R8I3 -->
+  <a-entity position="-8 2 0" rotation="0 90 0">
+    <a-image src="Drawings for VR/R8I3.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R8I4 -->
+  <a-entity position="-6 2 6">
+    <a-image src="Drawings for VR/R8I4.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R8I5 (center) -->
+  <a-entity position="0 2 0">
+    <a-image src="Drawings for VR/R8I5.png" scale="2 2 1"></a-image>
+    <a-entity plaque position="0 -1.3"></a-entity>
+  </a-entity>
+
+  <!-- R8I6 -->
+  <a-entity position="6 2 6">
+    <a-image src="Drawings for VR/R8I6.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R8I7 -->
+  <a-entity position="8 2 0" rotation="0 -90 0">
+    <a-image src="Drawings for VR/R8I7.png" scale="1.4 1.4 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R8I8 -->
+  <a-entity position="6 2 -6">
+    <a-image src="Drawings for VR/R8I8.png" scale="1.3 1.3 1"></a-image>
+    <a-entity plaque position="0 -1"></a-entity>
+  </a-entity>
+
+  <!-- R8I9 pedestal -->
+  <a-entity position="0 1 -3">
+    <a-box color="#d1f9f4" width="1.4" height="0.8" depth="1.4"></a-box>
+    <a-entity glass-box width="1.2" height="1" depth="1.2" position="0 1 0"></a-entity>
+    <a-image src="Drawings for VR/R8I9.png" position="0 1 0.02" scale="1 1 1"></a-image>
+    <a-entity plaque position="0 2"></a-entity>
+  </a-entity>
+
+  <!-- Plants -->
+  <a-cylinder color="#7e7e7e" radius="0.5" height="0.25" position="7 0.1 -7"></a-cylinder>
+  <a-entity plant position="7 0.7 -7"></a-entity>
+
+</a-entity>
