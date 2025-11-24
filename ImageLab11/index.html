@@ -117,57 +117,55 @@
   <a-sky color="#111111"></a-sky>
 
   <!-- =======================
-       HUB (ROOM 9) — OCTAGON
-       ====================== -->
-  <a-entity id="hub" position="0 0 0">
-    <!-- Floor & ceiling -->
-    <a-circle radius="10" rotation="-90 0 0" src="#tex-marble"></a-circle>
-    <a-circle radius="10" rotation="90 0 0" position="0 4 0" src="#tex-marble"></a-circle>
+     HUB (OCTAGON) FIXED
+     ======================= -->
+<a-entity id="hub" position="0 0 0">
 
-    <!-- Hub lights -->
-    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-    <a-entity light="type: point; intensity: 1.0; distance: 30" position="0 3 0"></a-entity>
+  <!-- Floor / Ceiling -->
+  <a-circle radius="10" rotation="-90 0 0" src="#tex-marble"></a-circle>
+  <a-circle radius="10" rotation="90 0 0" position="0 4 0" src="#tex-marble"></a-circle>
 
-    <!-- NORTH wall pair (Room 1) -->
-    <a-box position="-4 2 -9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-box position="4  2 -9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-plane src="#r1cover" width="2" height="2.5" position="-5.8 2 -9.2"></a-plane>
+  <!-- Lights -->
+  <a-entity light="type: ambient; intensity: 0.6"></a-entity>
+  <a-entity light="type: point; intensity: 1.0; distance: 40" position="0 3 0"></a-entity>
 
-    <!-- NORTHEAST (Room 2) -->
-    <a-box position="7.0 2 -7.0" rotation="0 45 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-box position="9.5 2 -4.5" rotation="0 45 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-plane src="#r2cover" width="2" height="2.5" rotation="0 45 0" position="8.5 2 -6.5"></a-plane>
+  <!-- WALL TEMPLATE (each split into LEFT piece + RIGHT piece with a hole in middle) -->
+  <!-- Width of full wall = 8. Opening gap = 4. So left = 2 width, right = 2 width -->
 
-    <!-- EAST (Room 3) -->
-    <a-box position="9.5 2 -4" rotation="0 90 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-box position="9.5 2  4" rotation="0 90 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-plane src="#r3cover" width="2" height="2.5" rotation="0 90 0" position="9.2 2 -5.8"></a-plane>
+  <!-- NORTH (Room 1) angle 0° -->
+  <a-box position="-2 2 -10" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+  <a-box position="2  2 -10" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
 
-    <!-- SOUTHEAST (Room 4) -->
-    <a-box position="9.5 2 4.5" rotation="0 135 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-box position="7.0 2 7.0" rotation="0 135 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-plane src="#r4cover" width="2" height="2.5" rotation="0 135 0" position="8.5 2 6.5"></a-plane>
+  <!-- NORTHEAST (Room 2) angle 45° -->
+  <a-box position="5.07 2 -7.07" rotation="0 45 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+  <a-box position="9.07 2 -3.07" rotation="0 45 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
 
-    <!-- SOUTH (Room 5) -->
-    <a-box position="4  2 9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-box position="-4 2 9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-plane src="#r5cover" width="2" height="2.5" position="-5.8 2 9.2"></a-plane>
+  <!-- EAST (Room 3) angle 90° -->
+  <a-box position="10 2 -2" rotation="0 90 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+  <a-box position="10 2  2" rotation="0 90 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
 
-    <!-- SOUTHWEST (Room 6) -->
-    <a-box position="-7.0 2 7.0" rotation="0 225 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-box position="-9.5 2 4.5" rotation="0 225 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-plane src="#r6cover" width="2" height="2.5" rotation="0 225 0" position="-8.5 2 6.5"></a-plane>
+  <!-- SOUTHEAST (Room 4) angle 135° -->
+  <a-box position="9.07 2 3.07"  rotation="0 135 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+  <a-box position="5.07 2 7.07"  rotation="0 135 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
 
-    <!-- WEST (Room 7) -->
-    <a-box position="-9.5 2 4" rotation="0 270 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-box position="-9.5 2 -4" rotation="0 270 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-plane src="#r7cover" width="2" height="2.5" rotation="0 270 0" position="-9.2 2 -5.8"></a-plane>
+  <!-- SOUTH (Room 5) angle 180° -->
+  <a-box position="2  2 10" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+  <a-box position="-2 2 10" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
 
-    <!-- NORTHWEST (Room 8) -->
-    <a-box position="-9.5 2 -4.5" rotation="0 315 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-box position="-7.0 2 -7.0" rotation="0 315 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-    <a-plane src="#r8cover" width="2" height="2.5" rotation="0 315 0" position="-8.5 2 -6.5"></a-plane>
-  </a-entity>
+  <!-- SOUTHWEST (Room 6) angle 225° -->
+  <a-box position="-5.07 2 7.07" rotation="0 225 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+  <a-box position="-9.07 2 3.07" rotation="0 225 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+
+  <!-- WEST (Room 7) angle 270° -->
+  <a-box position="-10 2  2" rotation="0 270 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+  <a-box position="-10 2 -2" rotation="0 270 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+
+  <!-- NORTHWEST (Room 8) angle 315° -->
+  <a-box position="-9.07 2 -3.07" rotation="0 315 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+  <a-box position="-5.07 2 -7.07" rotation="0 315 0" width="2" height="4" depth="0.3" material="src: #tex-concrete"></a-box>
+
+</a-entity>
+
 
   
 
