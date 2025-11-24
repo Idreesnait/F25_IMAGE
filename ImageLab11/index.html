@@ -10,54 +10,52 @@
     <!-- Extra Components -->
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
 
+    <!-- Physics (cannon.js + aframe-physics-system) -->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
+
+
     <!-- Movement System: Float Up + Gravity Down (Option A) -->
-    <script>
-      AFRAME.registerComponent("float-controls", {
-        init: function () {
-          const el = this.el;
-          const data = { velocityY: 0, grounded: true };
-          let lastSpace = 0;
+ <script>
+  AFRAME.registerComponent("float-controls", {
+    init: function () {
+      const el = this.el;
+      let lastSpace = 0;
 
-          window.addEventListener("keydown", (e) => {
-            if (e.code === "Space") {
-              const now = performance.now();
-              const double = now - lastSpace < 200;
-              lastSpace = now;
+      window.addEventListener("keydown", (e) => {
+        if (e.code !== "Space") return;
 
-              if (!double) {
-                // float up slow
-                data.velocityY = 0.035;
-              } else {
-                // double tap → gravity drop
-                data.velocityY = -0.12;
-              }
-            }
-          });
+        e.preventDefault();
+        const now = performance.now();
+        const double = now - lastSpace < 220;
+        lastSpace = now;
 
-          this.data = data;
-        },
+        const body = el.body; // physics body from aframe-physics-system
 
-        tick: function (time, delta) {
-          const el = this.el;
-          const d = this.data;
-
-          // apply vertical movement
-          const pos = el.getAttribute("position");
-          pos.y += d.velocityY;
-
-          // apply real gravity when rising
-          d.velocityY -= 0.002;
-
-          // ground level
-          if (pos.y < 1.6) {
-            pos.y = 1.6;
-            d.velocityY = 0;
+        if (body) {
+          // With physics: change vertical velocity
+          if (!double) {
+            // single tap → float up
+            body.velocity.y = 2;
+          } else {
+            // double tap → drop fast
+            body.velocity.y = -6;
           }
-
+        } else {
+          // Fallback if physics failed for some reason
+          const pos = el.getAttribute("position");
+          if (!double) {
+            pos.y += 0.5;
+          } else {
+            pos.y = 1.6;
+          }
           el.setAttribute("position", pos);
-        },
+        }
       });
-    </script>
+    },
+  });
+</script>
+
+
 
     <!-- FRAME COMPONENT (modern black frame) -->
     <script>
@@ -164,13 +162,19 @@
 
   <body>
     <!-- GLOBAL SCENE SETUP -->
-    <a-scene renderer="antialias: true; colorManagement: true">
+<a-scene
+  renderer="antialias: true; colorManagement: true"
+  physics="gravity: -9.8; debug: false">
       
       <!-- Sky -->
       <a-sky color="#e7e7e7"></a-sky>
 
       <!-- Player Rig with float controls -->
-      <a-entity id="player" float-controls position="0 1.6 0">
+<a-entity
+  id="player"
+  float-controls
+  dynamic-body="mass: 1; angularDamping: 1; linearDamping: 0.3"
+  position="0 1.6 0">
         <a-entity 
           camera 
           wasd-controls="acceleration: 55" 
@@ -189,11 +193,12 @@
 
       <!-- FLOOR (shared global ground plane) -->
       <a-plane
-        position="0 0 0"
-        rotation="-90 0 0"
-        width="200"
-        height="200"
-        src="#concrete">
+      position="0 0 0"
+      rotation="-90 0 0"
+      width="200"
+      height="200"
+      src="#concrete"
+      static-body>
       </a-plane>
 
       <!-- ============================= -->
@@ -304,67 +309,6 @@
   color="#6fae63"
   opacity="0.18">
 </a-plane>
-
-
-      <!-- ======================================= -->
-      <!-- HALLWAYS CONNECTING HUB TO ROOMS        -->
-      <!-- ======================================= -->
-
-      <!-- Front-left hallway → Room 1 -->
-      <!-- Centered on Door 1 at (-5, -9.75, facing -Z) -->
-      <a-box color="#d8d3c4" width="3" height="0.1" depth="14" position="-5 0.05 -17"></a-box>
-      <a-box color="#e8e6e3" width="0.2" height="3" depth="14" position="-6.5 1.5 -17"></a-box>
-      <a-box color="#e8e6e3" width="0.2" height="3" depth="14" position="-3.5 1.5 -17"></a-box>
-      <a-box color="#f5f4f2" width="3" height="0.1" depth="14" position="-5 3 -17"></a-box>
-
-      <!-- Front-right hallway → Room 2 -->
-      <!-- Centered on Door 2 at (5, -9.75, facing -Z) -->
-      <a-box color="#d8d3c4" width="3" height="0.1" depth="14" position="5 0.05 -17"></a-box>
-      <a-box color="#e8e6e3" width="0.2" height="3" depth="14" position="3.5 1.5 -17"></a-box>
-      <a-box color="#e8e6e3" width="0.2" height="3" depth="14" position="6.5 1.5 -17"></a-box>
-      <a-box color="#f5f4f2" width="3" height="0.1" depth="14" position="5 3 -17"></a-box>
-
-      <!-- Back-left hallway → Room 5 -->
-      <!-- Centered on Door 5 at (-5, 9.75, facing +Z) -->
-      <a-box color="#d8d3c4" width="3" height="0.1" depth="14" position="-5 0.05 17"></a-box>
-      <a-box color="#e8e6e3" width="0.2" height="3" depth="14" position="-6.5 1.5 17"></a-box>
-      <a-box color="#e8e6e3" width="0.2" height="3" depth="14" position="-3.5 1.5 17"></a-box>
-      <a-box color="#f5f4f2" width="3" height="0.1" depth="14" position="-5 3 17"></a-box>
-
-      <!-- Back-right hallway → Room 6 -->
-      <!-- Centered on Door 6 at (5, 9.75, facing +Z) -->
-      <a-box color="#d8d3c4" width="3" height="0.1" depth="14" position="5 0.05 17"></a-box>
-      <a-box color="#e8e6e3" width="0.2" height="3" depth="14" position="3.5 1.5 17"></a-box>
-      <a-box color="#e8e6e3" width="0.2" height="3" depth="14" position="6.5 1.5 17"></a-box>
-      <a-box color="#f5f4f2" width="3" height="0.1" depth="14" position="5 3 17"></a-box>
-
-      <!-- Right-upper hallway → Room 3 -->
-      <!-- Centered on Door 3 at (9.75, -5, facing +X) -->
-      <a-box color="#d8d3c4" width="14" height="0.1" depth="3" position="17 0.05 -5"></a-box>
-      <a-box color="#e8e6e3" width="14" height="3" depth="0.2" position="17 1.5 -6.5"></a-box>
-      <a-box color="#e8e6e3" width="14" height="3" depth="0.2" position="17 1.5 -3.5"></a-box>
-      <a-box color="#f5f4f2" width="14" height="0.1" depth="3" position="17 3 -5"></a-box>
-
-      <!-- Right-lower hallway → Room 4 -->
-      <!-- Centered on Door 4 at (9.75, 5, facing +X) -->
-      <a-box color="#d8d3c4" width="14" height="0.1" depth="3" position="17 0.05 5"></a-box>
-      <a-box color="#e8e6e3" width="14" height="3" depth="0.2" position="17 1.5 3.5"></a-box>
-      <a-box color="#e8e6e3" width="14" height="3" depth="0.2" position="17 1.5 6.5"></a-box>
-      <a-box color="#f5f4f2" width="14" height="0.1" depth="3" position="17 3 5"></a-box>
-
-      <!-- Left-upper hallway → Room 7 -->
-      <!-- Centered on Door 7 at (-9.75, -5, facing -X) -->
-      <a-box color="#d8d3c4" width="14" height="0.1" depth="3" position="-17 0.05 -5"></a-box>
-      <a-box color="#e8e6e3" width="14" height="3" depth="0.2" position="-17 1.5 -6.5"></a-box>
-      <a-box color="#e8e6e3" width="14" height="3" depth="0.2" position="-17 1.5 -3.5"></a-box>
-      <a-box color="#f5f4f2" width="14" height="0.1" depth="3" position="-17 3 -5"></a-box>
-
-      <!-- Left-lower hallway → Room 8 -->
-      <!-- Centered on Door 8 at (-9.75, 5, facing -X) -->
-      <a-box color="#d8d3c4" width="14" height="0.1" depth="3" position="-17 0.05 5"></a-box>
-      <a-box color="#e8e6e3" width="14" height="3" depth="0.2" position="-17 1.5 3.5"></a-box>
-      <a-box color="#e8e6e3" width="14" height="3" depth="0.2" position="-17 1.5 6.5"></a-box>
-      <a-box color="#f5f4f2" width="14" height="0.1" depth="3" position="-17 3 5"></a-box>
 
 <!-- ======================================= -->
 <!-- ROOM 1 — 5 artworks, pastel pink         -->
