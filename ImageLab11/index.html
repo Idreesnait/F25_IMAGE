@@ -1,419 +1,515 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>VR Museum — Octagon Hub + 8 Rooms (Corrected)</title>
-
-    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
-
-    <style>
-      body { margin: 0; overflow: hidden; }
-    </style>
-  </head>
-
-  <body>
-    <a-scene renderer="antialias: true; colorManagement: true">
-
-      <a-assets>
-        <img id="tex-marble"  src="Marble.jpg">
-        <img id="tex-concrete" src="Concrete.jpg">
-        <img id="tex-wood"    src="Wood.jpg">
-        <img id="tex-wood2"   src="Wood2.jpg">
-
-        <img id="r1cover" src="DrawingsForVR/R1Cover.png">
-        <img id="r1i1" src="DrawingsForVR/R1I1.png">
-        <img id="r1i2" src="DrawingsForVR/R1I2.png">
-        <img id="r1i3" src="DrawingsForVR/R1I3.png">
-        <img id="r1i4" src="DrawingsForVR/R1I4.png">
-        <img id="r1i5" src="DrawingsForVR/R1I5.png">
-
-        <img id="r2cover" src="DrawingsForVR/R2Cover.png">
-        <img id="r2i1" src="DrawingsForVR/R2I1.png">
-        <img id="r2i2" src="DrawingsForVR/R2I2.png">
-        <img id="r2i3" src="DrawingsForVR/R2I3.png">
-        <img id="r2i4" src="DrawingsForVR/R2I4.png">
-        <img id="r2i5" src="DrawingsForVR/R2I5.png">
-        <img id="r2i6" src="DrawingsForVR/R2I6.png">
-        <img id="r2i7" src="DrawingsForVR/R2I7.png">
-        <img id="r2i8" src="DrawingsForVR/R2I8.png">
-
-        <img id="r3cover" src="DrawingsForVR/R3Cover.png">
-        <img id="r3i1" src="DrawingsForVR/R3I1.png">
-        <img id="r3i2" src="DrawingsForVR/R3I2.png">
-        <img id="r3i3" src="DrawingsForVR/R3I3.png">
-
-        <img id="r4cover" src="DrawingsForVR/R4Cover.png">
-        <img id="r4i1" src="DrawingsForVR/R4I1.png">
-        <img id="r4i2" src="DrawingsForVR/R4I2.png">
-        <img id="r4i3" src="DrawingsForVR/R4I3.png">
-        <img id="r4i4" src="DrawingsForVR/R4I4.png">
-        <img id="r4i5" src="DrawingsForVR/R4I5.png">
-        <img id="r4i6" src="DrawingsForVR/R4I6.png">
-        <img id="r4i7" src="DrawingsForVR/R4I7.png">
-
-        <img id="r5cover" src="DrawingsForVR/R5ICover.png">
-        <img id="r5i1" src="DrawingsForVR/R5I1.png">
-        <img id="r5i2" src="DrawingsForVR/R5I2.png">
-        <img id="r5i3" src="DrawingsForVR/R5I3.png">
-        <img id="r5i4" src="DrawingsForVR/R5I4.png">
-        <img id="r5i5" src="DrawingsForVR/R5I5.png">
-        <img id="r5i6" src="DrawingsForVR/R5I6.png">
-        <img id="r5i7" src="DrawingsForVR/R5I7.png">
-        <img id="r5i8" src="DrawingsForVR/R5I8.png">
-        <img id="r5i9" src="DrawingsForVR/R5I9.png">
-
-        <img id="r6cover" src="DrawingsForVR/R6Cover.png">
-        <img id="r6i1" src="DrawingsForVR/R6I1.png">
-        <img id="r6i2" src="DrawingsForVR/R6I2.png">
-        <img id="r6i3" src="DrawingsForVR/R6I3.png">
-
-        <img id="r7cover" src="DrawingsForVR/R7Cover.png">
-        <img id="r7i1" src="DrawingsForVR/R7I1.png">
-        <img id="r7i2" src="DrawingsForVR/R7I2.png">
-        <img id="r7i3" src="DrawingsForVR/R7I3.png">
-
-        <img id="r8cover" src="DrawingsForVR/R8Cover.png">
-        <img id="r8i1" src="DrawingsForVR/R8I1.png">
-        <img id="r8i2" src="DrawingsForVR/R8I2.png">
-        <img id="r8i3" src="DrawingsForVR/R8I3.png">
-        <img id="r8i4" src="DrawingsForVR/R8I4.png">
-        <img id="r8i5" src="DrawingsForVR/R8I5.png">
-        <img id="r8i6" src="DrawingsForVR/R8I6.png">
-        <img id="r8i7" src="DrawingsForVR/R8I7.png">
-        <img id="r8i8" src="DrawingsForVR/R8I8.png">
-        <img id="r8i9" src="DrawingsForVR/R8I9.png">
-
-      </a-assets>
-
-      <a-entity position="0 1.6 0">
-        <a-entity camera look-controls="pointerLockEnabled: true"
-                  wasd-controls="acceleration: 35">
-        </a-entity>
-      </a-entity>
-
-      <a-entity light="type: ambient; intensity: 0.25"></a-entity>
-      <a-entity light="type: directional; intensity: 0.5" position="1 4 1"></a-entity>
-
-      <a-sky color="#111111"></a-sky>
-
-      <a-entity id="hub" position="0 0 0">
-        <a-circle radius="10" rotation="-90 0 0" src="#tex-marble"></a-circle>
-        <a-circle radius="10" rotation="90 0 0" position="0 4 0" src="#tex-marble"></a-circle>
-
-        <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-        <a-entity light="type: point; intensity: 1.0; distance: 30" position="0 3 0"></a-entity>
-
-        <a-box position="-3.5 2 -9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-box position=" 3.5 2 -9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r1cover" width="2" height="2.5" position="-5.8 2 -9.2"></a-plane>
-
-        <a-box position="4.25 2 -9.2" rotation="0 45 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-box position="9.2 2 -4.25" rotation="0 45 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r2cover" width="2" height="2.5" rotation="0 45 0" position="7.4 2 -7.0"></a-plane>
-
-        <a-box position="9.5 2 -3.5" rotation="0 90 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-box position="9.5 2  3.5" rotation="0 90 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r3cover" width="2" height="2.5" rotation="0 90 0" position="9.2 2 -5.8"></a-plane>
-
-        <a-box position="9.2 2 4.25" rotation="0 135 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-box position="4.25 2 9.2" rotation="0 135 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r4cover" width="2" height="2.5" rotation="0 135 0" position="7.0 2 7.4"></a-plane>
-
-        <a-box position=" 3.5 2  9.5" rotation="0 180 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-box position="-3.5 2  9.5" rotation="0 180 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r5cover" width="2" height="2.5" rotation="0 180 0" position="5.8 2 9.2"></a-plane>
-
-        <a-box position="-9.2 2 4.25" rotation="0 225 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-box position="-4.25 2 9.2" rotation="0 225 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r6cover" width="2" height="2.5" rotation="0 225 0" position="-7.0 2 7.4"></a-plane>
-
-        <a-box position="-9.5 2  3.5" rotation="0 270 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-box position="-9.5 2 -3.5" rotation="0 270 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r7cover" width="2" height="2.5" rotation="0 270 0" position="-9.2 2 5.8"></a-plane>
-
-        <a-box position="-9.2 2 -4.25" rotation="0 315 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-box position="-4.25 2 -9.2" rotation="0 315 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r8cover" width="2" height="2.5" rotation="0 315 0" position="-7.4 2 -7.0"></a-plane>
-      </a-entity>
-
-      <a-entity id="hall1" position="0 0 -9.5" rotation="0 0 0">
-        <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
-      </a-entity>
-
-      <a-entity id="hall2" position="6.72 0 -6.72" rotation="0 45 0">
-        <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
-      </a-entity>
-
-      <a-entity id="hall3" position="9.5 0 0" rotation="0 90 0">
-        <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
-      </a-entity>
-
-      <a-entity id="hall4" position="6.72 0 6.72" rotation="0 135 0">
-        <a-box width="3" height="0.1" depth="20" position="0 0 -10" material="src: #tex-wood2"></a-box>
-        <a-box width="3" height="0.1" depth="20" position="0 3 -10" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="20" position="-1.45 1.5 -10" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="20" position=" 1.45 1.5 -10" material="src: #tex-wood2"></a-box>
-        <a-entity light="type: point; intensity: 0.8; distance: 30" position="0 2 -10"></a-entity>
-      </a-entity>
-
-      <a-entity id="hall5" position="0 0 9.5" rotation="0 180 0">
-        <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
-      </a-entity>
-
-      <a-entity id="hall6" position="-6.72 0 6.72" rotation="0 225 0">
-        <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
-      </a-entity>
-
-      <a-entity id="hall7" position="-9.5 0 0" rotation="0 270 0">
-        <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
-        <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
-      </a-entity>
-
-      <a-entity id="hall8" position="-6.72 0 -6.72" rotation="0 315 0">
-        <a-box width="3" height="0.1" depth="20" position="0 0 -10" material="src: #tex-wood2"></a-box>
-        <a-box width="3" height="0.1" depth="20" position="0 3 -10" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="20" position="-1.45 1.5 -10" material="src: #tex-wood2"></a-box>
-        <a-box width="0.1" height="3" depth="20" position=" 1.45 1.5 -10" material="src: #tex-wood2"></a-box>
-        <a-entity light="type: point; intensity: 0.8; distance: 30" position="0 2 -10"></a-entity>
-      </a-entity>
-
-      <a-entity id="room1" position="0 0 -24">
-        <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-        <a-entity light="type: point; intensity: 1.1; distance: 20" position="0 3 0"></a-entity>
-
-        <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
-        <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
-
-        <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
-        <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
-
-        <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position="-5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position=" 5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-
-        <a-plane src="#r1cover" width="2" height="2.5" position="0 2 -4.8"></a-plane>
-        <a-plane src="#r1i1" width="1.4" height="1.4" position="-3 2 -4.8"></a-plane>
-        <a-plane src="#r1i2" width="1.4" height="1.4" position=" 3 2 -4.8"></a-plane>
-
-        <a-box width="1.8" height="0.8" depth="1.2" position="-2 0.4 1.5" material="src: #tex-marble"></a-box>
-        <a-plane src="#r1i3" rotation="-90 0 0" position="-2 0.82 1.5" width="1.6" height="1"></a-plane>
-
-        <a-plane src="#r1i4" width="1.5" height="1.8" position="-4.8 2 0" rotation="0 90 0"></a-plane>
-        <a-plane src="#r1i5" width="1.5" height="1.8" position="4.8 2 0" rotation="0 -90 0"></a-plane>
-      </a-entity>
-
-      <a-entity id="room2" position="18 0 -18" rotation="0 45 0">
-        <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-        <a-entity light="type: point; intensity: 1.1; distance: 20" position="0 3 0"></a-entity>
-
-        <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
-        <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
-
-        <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
-        <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
-
-        <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position="-5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position=" 5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-
-        <a-plane src="#r2cover" width="2.5" height="3" position="0 2 -4.8"></a-plane>
-
-        <a-plane src="#r2i1" width="1.3" height="1.7" position="-4.8 2  2" rotation="0 90 0"></a-plane>
-        <a-plane src="#r2i2" width="1.3" height="1.7" position="-4.8 2  0" rotation="0 90 0"></a-plane>
-        <a-plane src="#r2i3" width="1.3" height="1.7" position="-4.8 2 -2" rotation="0 90 0"></a-plane>
-
-        <a-plane src="#r2i4" width="1.4" height="1.7" position="4.8 2  2" rotation="0 -90 0"></a-plane>
-        <a-plane src="#r2i5" width="1.4" height="1.7" position="4.8 2  0" rotation="0 -90 0"></a-plane>
-        <a-plane src="#r2i6" width="1.4" height="1.7" position="4.8 2 -2" rotation="0 -90 0"></a-plane>
-
-        <a-box width="3" height="0.3" depth="1" position="0 0.3 2" material="src: #tex-wood2"></a-box>
-        <a-plane src="#r2i7" rotation="-90 0 0" position="0 0.42 2" width="2.8" height="0.9"></a-plane>
-
-        <a-plane src="#r2i8" width="2.1" height="2.5" position="0 2 4.8" rotation="0 180 0"></a-plane>
-      </a-entity>
-
-      <a-entity id="room3" position="24 0 0" rotation="0 90 0">
-        <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-        <a-entity light="type: point; intensity: 1.1; distance: 20" position="0 3 0"></a-entity>
-
-        <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
-        <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
-
-        <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
-        <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
-
-        <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position="-5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position=" 5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-
-        <a-plane src="#r3cover" width="2" height="2.5" position="0 2 -4.8"></a-plane>
-
-        <a-box width="2" height="0.8" depth="1" position="0 0.4 1.5" material="src: #tex-marble"></a-box>
-        <a-plane src="#r3i1" rotation="-90 0 0" position="0 0.8 1.5" width="1.9" height="0.9"></a-plane>
-
-        <a-plane src="#r3i2" width="1.3" height="1.6" position="-4.8 2 0" rotation="0 90 0"></a-plane>
-        <a-plane src="#r3i3" width="1.3" height="1.6" position="4.8 2 0" rotation="0 -90 0"></a-plane>
-      </a-entity>
-
-      <a-entity id="room4" position="26 0 26" rotation="0 135 0">
-        <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-        <a-entity light="type: point; intensity: 1.05; distance: 22" position="0 3 0"></a-entity>
-
-        <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
-        <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
-
-        <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
-        <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
-
-        <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position="-5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position=" 5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-
-        <a-plane src="#r4cover" width="2.4" height="2.8" position="0 2 -4.8"></a-plane>
-
-        <a-plane src="#r4i1" width="1.5" height="1.5" position="-3.5 2 -4.8"></a-plane>
-        <a-plane src="#r4i2" width="1.5" height="1.5" position=" 3.5 2 -4.8"></a-plane>
-
-        <a-box width="1.6" height="0.8" depth="1.6" position="-2.8 0.4 1.5" material="src: #tex-marble"></a-box>
-        <a-plane src="#r4i3" rotation="-90 0 0" position="-2.8 0.82 1.5" width="1.5" height="1.5"></a-plane>
-
-        <a-box width="2" height="0.7" depth="0.8" position="2.5 0.35 2" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r4i4" rotation="-90 0 0" position="2.5 0.71 2" width="1.9" height="0.7"></a-plane>
-
-        <a-plane src="#r4i5" width="1.4" height="1.6" position="-4.8 2 0" rotation="0 90 0"></a-plane>
-        <a-plane src="#r4i6" width="1.4" height="1.6" position="4.8 2 0" rotation="0 -90 0"></a-plane>
-
-        <a-plane src="#r4i7" width="2" height="2.3" position="0 2 4.8" rotation="0 180 0"></a-plane>
-      </a-entity>
-
-      <a-entity id="room5" position="0 0 26">
-        <a-entity light="type: ambient; intensity: 0.3"></a-entity>
-        <a-entity light="type: point; intensity: 1.2; distance: 25" position="0 2.8 0"></a-entity>
-
-        <a-box width="12" height="0.1" depth="12" position="0 0 0" color="#000000"></a-box>
-        <a-box width="12" height="0.1" depth="12" position="0 4 0" color="#000000"></a-box>
-
-        <a-box width="3" height="4" depth="0.1" position="-3.5 2 -6" color="#000000"></a-box>
-        <a-box width="3" height="4" depth="0.1" position=" 3.5 2 -6" color="#000000"></a-box>
-
-        <a-box width="12" height="4" depth="0.1" position="0 2 6" rotation="0 180 0" color="#000000"></a-box>
-        <a-box width="0.1" height="4" depth="12" position="-6 2 0" rotation="0 90 0" color="#000000"></a-box>
-        <a-box width="0.1" height="4" depth="12" position=" 6 2 0" rotation="0 90 0" color="#000000"></a-box>
-
-        <a-box width="10" height="0.5" depth="2" position="0 0.5 0" material="src: #tex-marble"></a-box>
-
-        <a-plane src="#r5cover" width="1.4" height="1.4" position="-4 1.5 0.01"></a-plane>
-        <a-plane src="#r5i1"   width="1.4" height="1.4" position="-3 1.5 0.01"></a-plane>
-        <a-plane src="#r5i2"   width="1.4" height="1.4" position="-2 1.5 0.01"></a-plane>
-        <a-plane src="#r5i3"   width="1.4" height="1.4" position="-1 1.5 0.01"></a-plane>
-        <a-plane src="#r5i4"   width="1.4" height="1.4" position=" 0 1.5 0.01"></a-plane>
-        <a-plane src="#r5i5"   width="1.4" height="1.4" position=" 1 1.5 0.01"></a-plane>
-        <a-plane src="#r5i6"   width="1.4" height="1.4" position=" 2 1.5 0.01"></a-plane>
-        <a-plane src="#r5i7"   width="1.4" height="1.4" position=" 3 1.5 0.01"></a-plane>
-        <a-plane src="#r5i8"   width="1.4" height="1.4" position=" 4 1.5 0.01"></a-plane>
-        <a-plane src="#r5i9"   width="1.4" height="1.4" position=" 5 1.5 0.01"></a-plane>
-      </a-entity>
-
-      <a-entity id="room6" position="-18 0 18" rotation="0 225 0">
-        <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-        <a-entity light="type: point; intensity: 1.05; distance: 20" position="0 3 0"></a-entity>
-
-        <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
-        <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
-
-        <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
-        <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
-
-        <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position="-5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position=" 5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-
-        <a-plane src="#r6cover" width="2" height="2.3" position="0 2 -4.8"></a-plane>
-        <a-plane src="#r6i1"   width="1.5" height="1.5" position="-4.8 2 0" rotation="0 90 0"></a-plane>
-        <a-plane src="#r6i2"   width="1.5" height="1.5" position=" 4.8 2 0" rotation="0 -90 0"></a-plane>
-
-        <a-box width="2" height="0.7" depth="1" position="0 0.35 2.5" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r6i3" rotation="-90 0 0" position="0 0.72 2.5" width="1.9" height="0.9"></a-plane>
-      </a-entity>
-
-      <a-entity id="room7" position="-24 0 0" rotation="0 270 0">
-        <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-        <a-entity light="type: point; intensity: 1.05; distance: 20" position="0 3 0"></a-entity>
-
-        <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
-        <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
-
-        <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
-        <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
-
-        <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position="-5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position=" 5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-
-        <a-plane src="#r7cover" width="2.4" height="2.7" position="0 2 -4.8"></a-plane>
-        <a-plane src="#r7i1" width="1.3" height="1.6" position="-4.8 2 0" rotation="0 90 0"></a-plane>
-        <a-plane src="#r7i2" width="1.3" height="1.6" position=" 4.8 2 0" rotation="0 -90 0"></a-plane>
-
-        <a-box width="1.7" height="0.8" depth="1.2" position="0 0.4 2" material="src: #tex-marble"></a-box>
-        <a-plane src="#r7i3" rotation="-90 0 0" position="0 0.82 2" width="1.6" height="1"></a-plane>
-      </a-entity>
-
-      <a-entity id="room8" position="-26 0 -26" rotation="0 315 0">
-        <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-        <a-entity light="type: point; intensity: 1.1; distance: 22" position="0 3 0"></a-entity>
-
-        <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
-        <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
-
-        <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
-        <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
-
-        <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position="-5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-        <a-box width="0.1" height="4" depth="10" position=" 5 2 0" rotation="0 90 0" material="src: #tex-wood"></a-box>
-
-        <a-plane src="#r8cover" width="2.4" height="2.7" position="0 2 -4.8"></a-plane>
-
-        <a-plane src="#r8i1" width="1.3" height="1.6" position="-3.5 2 -4.8"></a-plane>
-        <a-plane src="#r8i2" width="1.3" height="1.6" position="-4.8 2 -2.5" rotation="0 90 0"></a-plane>
-        <a-plane src="#r8i3" width="1.3" height="1.6" position="-4.8 2  0"   rotation="0 90 0"></a-plane>
-        <a-plane src="#r8i4" width="1.3" height="1.6" position="-4.8 2  2.5" rotation="0 90 0"></a-plane>
-
-        <a-plane src="#r8i5" width="1.4" height="1.6" position="0 2 4.8" rotation="0 180 0"></a-plane>
-
-        <a-plane src="#r8i6" width="1.3" height="1.6" position="4.8 2  2.5" rotation="0 -90 0"></a-plane>
-        <a-plane src="#r8i7" width="1.3" height="1.6" position="4.8 2  0"   rotation="0 -90 0"></a-plane>
-        <a-plane src="#r8i8" width="1.3" height="1.6" position="4.8 2 -2.5" rotation="0 -90 0"></a-plane>
-
-        <a-box width="2" height="0.7" depth="1" position="0 0.35 2" material="src: #tex-concrete"></a-box>
-        <a-plane src="#r8i9" rotation="-90 0 0" position="0 0.72 2" width="1.9" height="0.9"></a-plane>
-      </a-entity>
-
-    </a-scene>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <title>VR Museum — Octagon Hub + 8 Rooms</title>
+
+  <!-- A-Frame Core -->
+  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+
+  <!-- Optional extras -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+
+  <style>
+    body { margin: 0; overflow: hidden; }
+  </style>
+</head>
+
+<body>
+<a-scene renderer="antialias: true; colorManagement: true">
+
+  <!-- =======================
+       ASSETS
+       ====================== -->
+  <a-assets>
+    <!-- TEXTURES -->
+    <img id="tex-marble"   src="Marble.jpg">
+    <img id="tex-concrete" src="Concrete.jpg">
+    <img id="tex-wood"     src="Wood.jpg">
+    <img id="tex-wood2"    src="Wood2.jpg">
+
+    <!-- ROOM 1 -->
+    <img id="r1cover" src="DrawingsForVR/R1Cover.png">
+    <img id="r1i1"    src="DrawingsForVR/R1I1.png">
+    <img id="r1i2"    src="DrawingsForVR/R1I2.png">
+    <img id="r1i3"    src="DrawingsForVR/R1I3.png">
+    <img id="r1i4"    src="DrawingsForVR/R1I4.png">
+    <img id="r1i5"    src="DrawingsForVR/R1I5.png">
+
+    <!-- ROOM 2 -->
+    <img id="r2cover" src="DrawingsForVR/R2Cover.png">
+    <img id="r2i1"    src="DrawingsForVR/R2I1.png">
+    <img id="r2i2"    src="DrawingsForVR/R2I2.png">
+    <img id="r2i3"    src="DrawingsForVR/R2I3.png">
+    <img id="r2i4"    src="DrawingsForVR/R2I4.png">
+    <img id="r2i5"    src="DrawingsForVR/R2I5.png">
+    <img id="r2i6"    src="DrawingsForVR/R2I6.png">
+    <img id="r2i7"    src="DrawingsForVR/R2I7.png">
+    <img id="r2i8"    src="DrawingsForVR/R2I8.png">
+
+    <!-- ROOM 3 -->
+    <img id="r3cover" src="DrawingsForVR/R3Cover.png">
+    <img id="r3i1"    src="DrawingsForVR/R3I1.png">
+    <img id="r3i2"    src="DrawingsForVR/R3I2.png">
+    <img id="r3i3"    src="DrawingsForVR/R3I3.png">
+
+    <!-- ROOM 4 -->
+    <img id="r4cover" src="DrawingsForVR/R4Cover.png">
+    <img id="r4i1"    src="DrawingsForVR/R4I1.png">
+    <img id="r4i2"    src="DrawingsForVR/R4I2.png">
+    <img id="r4i3"    src="DrawingsForVR/R4I3.png">
+    <img id="r4i4"    src="DrawingsForVR/R4I4.png">
+    <img id="r4i5"    src="DrawingsForVR/R4I5.png">
+    <img id="r4i6"    src="DrawingsForVR/R4I6.png">
+    <img id="r4i7"    src="DrawingsForVR/R4I7.png">
+
+    <!-- ROOM 5 (STORY) -->
+    <img id="r5cover" src="DrawingsForVR/R5ICover.png">
+    <img id="r5i1"    src="DrawingsForVR/R5I1.png">
+    <img id="r5i2"    src="DrawingsForVR/R5I2.png">
+    <img id="r5i3"    src="DrawingsForVR/R5I3.png">
+    <img id="r5i4"    src="DrawingsForVR/R5I4.png">
+    <img id="r5i5"    src="DrawingsForVR/R5I5.png">
+    <img id="r5i6"    src="DrawingsForVR/R5I6.png">
+    <img id="r5i7"    src="DrawingsForVR/R5I7.png">
+    <img id="r5i8"    src="DrawingsForVR/R5I8.png">
+    <img id="r5i9"    src="DrawingsForVR/R5I9.png">
+
+    <!-- ROOM 6 -->
+    <img id="r6cover" src="DrawingsForVR/R6Cover.png">
+    <img id="r6i1"    src="DrawingsForVR/R6I1.png">
+    <img id="r6i2"    src="DrawingsForVR/R6I2.png">
+    <img id="r6i3"    src="DrawingsForVR/R6I3.png">
+
+    <!-- ROOM 7 -->
+    <img id="r7cover" src="DrawingsForVR/R7Cover.png">
+    <img id="r7i1"    src="DrawingsForVR/R7I1.png">
+    <img id="r7i2"    src="DrawingsForVR/R7I2.png">
+    <img id="r7i3"    src="DrawingsForVR/R7I3.png">
+
+    <!-- ROOM 8 -->
+    <img id="r8cover" src="DrawingsForVR/R8Cover.png">
+    <img id="r8i1"    src="DrawingsForVR/R8I1.png">
+    <img id="r8i2"    src="DrawingsForVR/R8I2.png">
+    <img id="r8i3"    src="DrawingsForVR/R8I3.png">
+    <img id="r8i4"    src="DrawingsForVR/R8I4.png">
+    <img id="r8i5"    src="DrawingsForVR/R8I5.png">
+    <img id="r8i6"    src="DrawingsForVR/R8I6.png">
+    <img id="r8i7"    src="DrawingsForVR/R8I7.png">
+    <img id="r8i8"    src="DrawingsForVR/R8I8.png">
+    <img id="r8i9"    src="DrawingsForVR/R8I9.png">
+  </a-assets>
+
+  <!-- =======================
+       CAMERA / PLAYER
+       ====================== -->
+  <a-entity position="0 1.6 0">
+    <a-entity camera
+              look-controls="pointerLockEnabled: true"
+              wasd-controls="acceleration: 35"></a-entity>
+  </a-entity>
+
+  <!-- GLOBAL LIGHT -->
+  <a-entity light="type: ambient; intensity: 0.25"></a-entity>
+  <a-entity light="type: directional; intensity: 0.5" position="1 4 1"></a-entity>
+
+  <!-- Sky -->
+  <a-sky color="#111111"></a-sky>
+
+  <!-- =======================
+       HUB (ROOM 9) — OCTAGON
+       ====================== -->
+  <a-entity id="hub" position="0 0 0">
+    <!-- Floor & ceiling -->
+    <a-circle radius="10" rotation="-90 0 0" src="#tex-marble"></a-circle>
+    <a-circle radius="10" rotation="90 0 0" position="0 4 0" src="#tex-marble"></a-circle>
+
+    <!-- Hub lights -->
+    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+    <a-entity light="type: point; intensity: 1.0; distance: 30" position="0 3 0"></a-entity>
+
+    <!-- NORTH wall pair (Room 1) -->
+    <a-box position="-4 2 -9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-box position="4  2 -9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r1cover" width="2" height="2.5" position="-5.8 2 -9.2"></a-plane>
+
+    <!-- NORTHEAST (Room 2) -->
+    <a-box position="7.0 2 -7.0" rotation="0 45 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-box position="9.5 2 -4.5" rotation="0 45 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r2cover" width="2" height="2.5" rotation="0 45 0" position="8.5 2 -6.5"></a-plane>
+
+    <!-- EAST (Room 3) -->
+    <a-box position="9.5 2 -4" rotation="0 90 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-box position="9.5 2  4" rotation="0 90 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r3cover" width="2" height="2.5" rotation="0 90 0" position="9.2 2 -5.8"></a-plane>
+
+    <!-- SOUTHEAST (Room 4) -->
+    <a-box position="9.5 2 4.5" rotation="0 135 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-box position="7.0 2 7.0" rotation="0 135 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r4cover" width="2" height="2.5" rotation="0 135 0" position="8.5 2 6.5"></a-plane>
+
+    <!-- SOUTH (Room 5) -->
+    <a-box position="4  2 9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-box position="-4 2 9.5" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r5cover" width="2" height="2.5" position="-5.8 2 9.2"></a-plane>
+
+    <!-- SOUTHWEST (Room 6) -->
+    <a-box position="-7.0 2 7.0" rotation="0 225 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-box position="-9.5 2 4.5" rotation="0 225 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r6cover" width="2" height="2.5" rotation="0 225 0" position="-8.5 2 6.5"></a-plane>
+
+    <!-- WEST (Room 7) -->
+    <a-box position="-9.5 2 4" rotation="0 270 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-box position="-9.5 2 -4" rotation="0 270 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r7cover" width="2" height="2.5" rotation="0 270 0" position="-9.2 2 -5.8"></a-plane>
+
+    <!-- NORTHWEST (Room 8) -->
+    <a-box position="-9.5 2 -4.5" rotation="0 315 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-box position="-7.0 2 -7.0" rotation="0 315 0" width="4" height="4" depth="0.5" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r8cover" width="2" height="2.5" rotation="0 315 0" position="-8.5 2 -6.5"></a-plane>
+  </a-entity>
+
+  <!-- =======================
+       HALLWAYS
+       ====================== -->
+
+  <!-- HALL 1 — NORTH -->
+  <a-entity id="hall1" position="0 0 -9.5" rotation="0 0 0">
+    <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
+  </a-entity>
+
+  <!-- HALL 2 — NORTHEAST -->
+  <a-entity id="hall2" position="7 0 -7" rotation="0 45 0">
+    <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
+  </a-entity>
+
+  <!-- HALL 3 — EAST -->
+  <a-entity id="hall3" position="9.5 0 0" rotation="0 90 0">
+    <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
+  </a-entity>
+
+  <!-- HALL 4 — SOUTHEAST (LONG) -->
+  <a-entity id="hall4" position="7 0 7" rotation="0 135 0">
+    <a-box width="3" height="0.1" depth="20" position="0 0 -10" material="src: #tex-wood2"></a-box>
+    <a-box width="3" height="0.1" depth="20" position="0 3 -10" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="20" position="-1.45 1.5 -10" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="20" position=" 1.45 1.5 -10" material="src: #tex-wood2"></a-box>
+    <a-entity light="type: point; intensity: 0.8; distance: 30" position="0 2 -10"></a-entity>
+  </a-entity>
+
+  <!-- HALL 5 — SOUTH -->
+  <a-entity id="hall5" position="0 0 9.5" rotation="0 180 0">
+    <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
+  </a-entity>
+
+  <!-- HALL 6 — SOUTHWEST -->
+  <a-entity id="hall6" position="-7 0 7" rotation="0 225 0">
+    <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
+  </a-entity>
+
+  <!-- HALL 7 — WEST -->
+  <a-entity id="hall7" position="-9.5 0 0" rotation="0 270 0">
+    <a-box width="3" height="0.1" depth="12" position="0 0 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="3" height="0.1" depth="12" position="0 3 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position="-1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="12" position=" 1.45 1.5 -6" material="src: #tex-wood2"></a-box>
+    <a-entity light="type: point; intensity: 0.8; distance: 20" position="0 2 -6"></a-entity>
+  </a-entity>
+
+  <!-- HALL 8 — NORTHWEST (LONG) -->
+  <a-entity id="hall8" position="-7 0 -7" rotation="0 315 0">
+    <a-box width="3" height="0.1" depth="20" position="0 0 -10" material="src: #tex-wood2"></a-box>
+    <a-box width="3" height="0.1" depth="20" position="0 3 -10" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="20" position="-1.45 1.5 -10" material="src: #tex-wood2"></a-box>
+    <a-box width="0.1" height="3" depth="20" position=" 1.45 1.5 -10" material="src: #tex-wood2"></a-box>
+    <a-entity light="type: point; intensity: 0.8; distance: 30" position="0 2 -10"></a-entity>
+  </a-entity>
+
+  <!-- =======================
+       ROOM 1 (NORTH)
+       ====================== -->
+  <a-entity id="room1" position="0 0 -24">
+    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+    <a-entity light="type: point; intensity: 1.1; distance: 20" position="0 3 0"></a-entity>
+
+    <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
+    <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
+
+    <!-- front wall split -->
+    <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
+    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
+
+    <!-- back + sides (no rotation so room is axis-aligned) -->
+    <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position="-5 2 0" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position=" 5 2 0" material="src: #tex-wood"></a-box>
+
+    <!-- art -->
+    <a-plane src="#r1cover" width="2" height="2.5" position="0 2 -4.8"></a-plane>
+    <a-plane src="#r1i1"   width="1.4" height="1.4" position="-3 2 -4.8"></a-plane>
+    <a-plane src="#r1i2"   width="1.4" height="1.4" position=" 3 2 -4.8"></a-plane>
+
+    <!-- pedestal -->
+    <a-box width="1.8" height="0.8" depth="1.2" position="-2 0.4 1.5" material="src: #tex-marble"></a-box>
+    <a-plane src="#r1i3" rotation="-90 0 0" position="-2 0.82 1.5" width="1.6" height="1"></a-plane>
+
+    <!-- side wall images -->
+    <a-plane src="#r1i4" width="1.5" height="1.8" position="-4.8 2 0" rotation="0 90 0"></a-plane>
+    <a-plane src="#r1i5" width="1.5" height="1.8" position=" 4.8 2 0" rotation="0 -90 0"></a-plane>
+  </a-entity>
+
+  <!-- =======================
+       ROOM 2 (NORTHEAST)
+       ====================== -->
+  <a-entity id="room2" position="18 0 -18" rotation="0 45 0">
+    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+    <a-entity light="type: point; intensity: 1.1; distance: 20" position="0 3 0"></a-entity>
+
+    <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
+    <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
+
+    <!-- front wall opening -->
+    <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
+    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
+
+    <!-- back + sides -->
+    <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position="-5 2 0" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position=" 5 2 0" material="src: #tex-wood"></a-box>
+
+    <!-- cover front -->
+    <a-plane src="#r2cover" width="2.5" height="3" position="0 2 -4.8"></a-plane>
+
+    <!-- left cluster -->
+    <a-plane src="#r2i1" width="1.3" height="1.7" position="-4.8 2  2" rotation="0 90 0"></a-plane>
+    <a-plane src="#r2i2" width="1.3" height="1.7" position="-4.8 2  0" rotation="0 90 0"></a-plane>
+    <a-plane src="#r2i3" width="1.3" height="1.7" position="-4.8 2 -2" rotation="0 90 0"></a-plane>
+
+    <!-- right cluster -->
+    <a-plane src="#r2i4" width="1.4" height="1.7" position="4.8 2  2" rotation="0 -90 0"></a-plane>
+    <a-plane src="#r2i5" width="1.4" height="1.7" position="4.8 2  0" rotation="0 -90 0"></a-plane>
+    <a-plane src="#r2i6" width="1.4" height="1.7" position="4.8 2 -2" rotation="0 -90 0"></a-plane>
+
+    <!-- floor slab -->
+    <a-box width="3" height="0.3" depth="1" position="0 0.3 2" material="src: #tex-wood2"></a-box>
+    <a-plane src="#r2i7" rotation="-90 0 0" position="0 0.42 2" width="2.8" height="0.9"></a-plane>
+
+    <!-- back wall -->
+    <a-plane src="#r2i8" width="2.1" height="2.5" position="0 2 4.8" rotation="0 180 0"></a-plane>
+  </a-entity>
+
+  <!-- =======================
+       ROOM 3 (EAST)
+       ====================== -->
+  <a-entity id="room3" position="24 0 0" rotation="0 90 0">
+    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+    <a-entity light="type: point; intensity: 1.1; distance: 20" position="0 3 0"></a-entity>
+
+    <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
+    <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
+
+    <!-- front opening -->
+    <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
+    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
+
+    <!-- back + sides -->
+    <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position="-5 2 0" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position=" 5 2 0" material="src: #tex-wood"></a-box>
+
+    <!-- art -->
+    <a-plane src="#r3cover" width="2" height="2.5" position="0 2 -4.8"></a-plane>
+
+    <a-box width="2" height="0.8" depth="1" position="0 0.4 1.5" material="src: #tex-marble"></a-box>
+    <a-plane src="#r3i1" rotation="-90 0 0" position="0 0.8 1.5" width="1.9" height="0.9"></a-plane>
+
+    <a-plane src="#r3i2" width="1.3" height="1.6" position="-4.8 2 0" rotation="0 90 0"></a-plane>
+    <a-plane src="#r3i3" width="1.3" height="1.6" position=" 4.8 2 0" rotation="0 -90 0"></a-plane>
+  </a-entity>
+
+  <!-- =======================
+       ROOM 4 (SOUTHEAST, FAR)
+       ====================== -->
+  <a-entity id="room4" position="26 0 26" rotation="0 135 0">
+    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+    <a-entity light="type: point; intensity: 1.05; distance: 22" position="0 3 0"></a-entity>
+
+    <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
+    <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
+
+    <!-- front opening -->
+    <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
+    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
+
+    <!-- back + sides -->
+    <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position="-5 2 0" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position=" 5 2 0" material="src: #tex-wood"></a-box>
+
+    <a-plane src="#r4cover" width="2.4" height="2.8" position="0 2 -4.8"></a-plane>
+
+    <a-plane src="#r4i1" width="1.5" height="1.5" position="-3.5 2 -4.8"></a-plane>
+    <a-plane src="#r4i2" width="1.5" height="1.5" position=" 3.5 2 -4.8"></a-plane>
+
+    <a-box width="1.6" height="0.8" depth="1.6" position="-2.8 0.4 1.5" material="src: #tex-marble"></a-box>
+    <a-plane src="#r4i3" rotation="-90 0 0" position="-2.8 0.82 1.5" width="1.5" height="1.5"></a-plane>
+
+    <a-box width="2" height="0.7" depth="0.8" position="2.5 0.35 2" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r4i4" rotation="-90 0 0" position="2.5 0.71 2" width="1.9" height="0.7"></a-plane>
+
+    <a-plane src="#r4i5" width="1.4" height="1.6" position="-4.8 2 0" rotation="0 90 0"></a-plane>
+    <a-plane src="#r4i6" width="1.4" height="1.6" position=" 4.8 2 0" rotation="0 -90 0"></a-plane>
+
+    <a-plane src="#r4i7" width="2" height="2.3" position="0 2 4.8" rotation="0 180 0"></a-plane>
+  </a-entity>
+
+  <!-- =======================
+       ROOM 5 (SOUTH) — BLACK STORY
+       ====================== -->
+  <a-entity id="room5" position="0 0 26">
+    <a-entity light="type: ambient; intensity: 0.3"></a-entity>
+    <a-entity light="type: point; intensity: 1.2; distance: 25" position="0 2.8 0"></a-entity>
+
+    <!-- black floor / ceiling -->
+    <a-box width="12" height="0.1" depth="12" position="0 0 0" color="#000000"></a-box>
+    <a-box width="12" height="0.1" depth="12" position="0 4 0" color="#000000"></a-box>
+
+    <!-- front wall split -->
+    <a-box width="3" height="4" depth="0.1" position="-3.5 2 -6" color="#000000"></a-box>
+    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 -6" color="#000000"></a-box>
+
+    <!-- back + sides (no rotation) -->
+    <a-box width="12" height="4" depth="0.1" position="0 2 6" color="#000000"></a-box>
+    <a-box width="0.1" height="4" depth="12" position="-6 2 0" color="#000000"></a-box>
+    <a-box width="0.1" height="4" depth="12" position=" 6 2 0" color="#000000"></a-box>
+
+    <!-- marble story slab -->
+    <a-box width="10" height="0.5" depth="2" position="0 0.5 0" material="src: #tex-marble"></a-box>
+
+    <!-- ordered story images -->
+    <a-plane src="#r5cover" width="1.4" height="1.4" position="-4 1.5 0.01"></a-plane>
+    <a-plane src="#r5i1"   width="1.4" height="1.4" position="-3 1.5 0.01"></a-plane>
+    <a-plane src="#r5i2"   width="1.4" height="1.4" position="-2 1.5 0.01"></a-plane>
+    <a-plane src="#r5i3"   width="1.4" height="1.4" position="-1 1.5 0.01"></a-plane>
+    <a-plane src="#r5i4"   width="1.4" height="1.4" position=" 0 1.5 0.01"></a-plane>
+    <a-plane src="#r5i5"   width="1.4" height="1.4" position=" 1 1.5 0.01"></a-plane>
+    <a-plane src="#r5i6"   width="1.4" height="1.4" position=" 2 1.5 0.01"></a-plane>
+    <a-plane src="#r5i7"   width="1.4" height="1.4" position=" 3 1.5 0.01"></a-plane>
+    <a-plane src="#r5i8"   width="1.4" height="1.4" position=" 4 1.5 0.01"></a-plane>
+    <a-plane src="#r5i9"   width="1.4" height="1.4" position=" 5 1.5 0.01"></a-plane>
+  </a-entity>
+
+  <!-- =======================
+       ROOM 6 (SOUTHWEST)
+       ====================== -->
+  <a-entity id="room6" position="-18 0 18" rotation="0 225 0">
+    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+    <a-entity light="type: point; intensity: 1.05; distance: 20" position="0 3 0"></a-entity>
+
+    <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
+    <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
+
+    <!-- front opening -->
+    <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
+    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
+
+    <!-- back + sides -->
+    <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position="-5 2 0" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position=" 5 2 0" material="src: #tex-wood"></a-box>
+
+    <a-plane src="#r6cover" width="2" height="2.3" position="0 2 -4.8"></a-plane>
+    <a-plane src="#r6i1"   width="1.5" height="1.5" position="-4.8 2 0" rotation="0 90 0"></a-plane>
+    <a-plane src="#r6i2"   width="1.5" height="1.5" position=" 4.8 2 0" rotation="0 -90 0"></a-plane>
+
+    <a-box width="2" height="0.7" depth="1" position="0 0.35 2.5" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r6i3" rotation="-90 0 0" position="0 0.72 2.5" width="1.9" height="0.9"></a-plane>
+  </a-entity>
+
+  <!-- =======================
+       ROOM 7 (WEST)
+       ====================== -->
+  <a-entity id="room7" position="-24 0 0" rotation="0 270 0">
+    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+    <a-entity light="type: point; intensity: 1.05; distance: 20" position="0 3 0"></a-entity>
+
+    <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
+    <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
+
+    <!-- front opening -->
+    <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
+    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
+
+    <!-- back + sides -->
+    <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position="-5 2 0" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position=" 5 2 0" material="src: #tex-wood"></a-box>
+
+    <a-plane src="#r7cover" width="2.4" height="2.7" position="0 2 -4.8"></a-plane>
+    <a-plane src="#r7i1"   width="1.3" height="1.6" position="-4.8 2 0" rotation="0 90 0"></a-plane>
+    <a-plane src="#r7i2"   width="1.3" height="1.6" position=" 4.8 2 0" rotation="0 -90 0"></a-plane>
+
+    <a-box width="1.7" height="0.8" depth="1.2" position="0 0.4 2" material="src: #tex-marble"></a-box>
+    <a-plane src="#r7i3" rotation="-90 0 0" position="0 0.82 2" width="1.6" height="1"></a-plane>
+  </a-entity>
+
+  <!-- =======================
+       ROOM 8 (NORTHWEST, FAR)
+       ====================== -->
+  <a-entity id="room8" position="-26 0 -26" rotation="0 315 0">
+    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+    <a-entity light="type: point; intensity: 1.1; distance: 22" position="0 3 0"></a-entity>
+
+    <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
+    <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
+
+    <!-- front opening -->
+    <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
+    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
+
+    <!-- back + sides -->
+    <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position="-5 2 0" material="src: #tex-wood"></a-box>
+    <a-box width="0.1" height="4" depth="10" position=" 5 2 0" material="src: #tex-wood"></a-box>
+
+    <a-plane src="#r8cover" width="2.4" height="2.7" position="0 2 -4.8"></a-plane>
+
+    <!-- spiral-ish images -->
+    <a-plane src="#r8i1" width="1.3" height="1.6" position="-3.5 2 -4.8"></a-plane>
+    <a-plane src="#r8i2" width="1.3" height="1.6" position="-4.8 2 -2.5" rotation="0 90 0"></a-plane>
+    <a-plane src="#r8i3" width="1.3" height="1.6" position="-4.8 2  0"   rotation="0 90 0"></a-plane>
+    <a-plane src="#r8i4" width="1.3" height="1.6" position="-4.8 2  2.5" rotation="0 90 0"></a-plane>
+
+    <a-plane src="#r8i5" width="1.4" height="1.6" position="0 2 4.8" rotation="0 180 0"></a-plane>
+
+    <a-plane src="#r8i6" width="1.3" height="1.6" position="4.8 2  2.5" rotation="0 -90 0"></a-plane>
+    <a-plane src="#r8i7" width="1.3" height="1.6" position="4.8 2  0"   rotation="0 -90 0"></a-plane>
+    <a-plane src="#r8i8" width="1.3" height="1.6" position="4.8 2 -2.5" rotation="0 -90 0"></a-plane>
+
+    <a-box width="2" height="0.7" depth="1" position="0 0.35 2" material="src: #tex-concrete"></a-box>
+    <a-plane src="#r8i9" rotation="-90 0 0" position="0 0.72 2" width="1.9" height="0.9"></a-plane>
+  </a-entity>
+
+</a-scene>
+</body>
 </html>
