@@ -215,45 +215,70 @@
     <a-plane src="#r1i5" width="1.5" height="1.8" position=" 4.8 2 0" rotation="0 -90 0"></a-plane>
   </a-entity>
 
-  <!-- =======================
-       ROOM 2 (NORTHEAST)
-       ====================== -->
-  <a-entity id="room2" position="18 0 -18" rotation="0 45 0">
-    <a-entity light="type: ambient; intensity: 0.4"></a-entity>
-    <a-entity light="type: point; intensity: 1.1; distance: 20" position="0 3 0"></a-entity>
+ >
+    <!-- =======================
+     ROOM 2 (NORTHEAST)
+     ====================== -->
+<a-entity id="room2" position="18 0 -18" rotation="0 45 0">
+  <a-entity light="type: ambient; intensity: 0.4"></a-entity>
+  <a-entity light="type: point; intensity: 1.1; distance: 20" position="0 3 0"></a-entity>
 
-    <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
-    <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
+  <!-- floor / ceiling -->
+  <a-box width="10" height="0.1" depth="10" position="0 0 0" material="src: #tex-wood"></a-box>
+  <a-box width="10" height="0.1" depth="10" position="0 4 0" material="src: #tex-wood"></a-box>
 
-    <!-- front wall opening -->
-    <a-box width="3" height="4" depth="0.1" position="-3.5 2 5" material="src: #tex-wood"></a-box>
-    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 5" material="src: #tex-wood"></a-box>
+  <!-- FIXED front opening (rotate -45° to counter the room’s +45°) -->
+  <a-box width="3" height="4" depth="0.1"
+         position="-3.5 2 5"
+         rotation="0 -45 0"
+         material="src: #tex-wood"></a-box>
 
-    <!-- back + sides -->
-    <a-box width="10" height="4" depth="0.1" position="0 2 -5" material="src: #tex-wood"></a-box>
-    <a-box width="0.1" height="4" depth="10" position="-5 2 0" material="src: #tex-wood"></a-box>
-    <a-box width="0.1" height="4" depth="10" position=" 5 2 0" material="src: #tex-wood"></a-box>
+  <a-box width="3" height="4" depth="0.1"
+         position=" 3.5 2 5"
+         rotation="0 -45 0"
+         material="src: #tex-wood"></a-box>
 
-    <!-- cover front -->
-    <a-plane src="#r2cover" width="2.5" height="3" position="0 2 -4.8"></a-plane>
+  <!-- back + sides (also rotated to match interior walls correctly) -->
+  <a-box width="10" height="4" depth="0.1"
+         position="0 2 -5"
+         rotation="0 -45 0"
+         material="src: #tex-wood"></a-box>
 
-    <!-- left cluster -->
-    <a-plane src="#r2i1" width="1.3" height="1.7" position="-4.8 2  2" rotation="0 90 0"></a-plane>
-    <a-plane src="#r2i2" width="1.3" height="1.7" position="-4.8 2  0" rotation="0 90 0"></a-plane>
-    <a-plane src="#r2i3" width="1.3" height="1.7" position="-4.8 2 -2" rotation="0 90 0"></a-plane>
+  <a-box width="0.1" height="4" depth="10"
+         position="-5 2 0"
+         rotation="0 45 0"
+         material="src: #tex-wood"></a-box>
 
-    <!-- right cluster -->
-    <a-plane src="#r2i4" width="1.4" height="1.7" position="4.8 2  2" rotation="0 -90 0"></a-plane>
-    <a-plane src="#r2i5" width="1.4" height="1.7" position="4.8 2  0" rotation="0 -90 0"></a-plane>
-    <a-plane src="#r2i6" width="1.4" height="1.7" position="4.8 2 -2" rotation="0 -90 0"></a-plane>
+  <a-box width="0.1" height="4" depth="10"
+         position="5 2 0"
+         rotation="0 45 0"
+         material="src: #tex-wood"></a-box>
 
-    <!-- floor slab -->
-    <a-box width="3" height="0.3" depth="1" position="0 0.3 2" material="src: #tex-wood2"></a-box>
-    <a-plane src="#r2i7" rotation="-90 0 0" position="0 0.42 2" width="2.8" height="0.9"></a-plane>
+  <!-- cover front -->
+  <a-plane src="#r2cover" width="2.5" height="3"
+           position="0 2 -4.8"
+           rotation="0 -45 0"></a-plane>
 
-    <!-- back wall -->
-    <a-plane src="#r2i8" width="2.1" height="2.5" position="0 2 4.8" rotation="0 180 0"></a-plane>
-  </a-entity>
+  <!-- left cluster (rotations unchanged) -->
+  <a-plane src="#r2i1" width="1.3" height="1.7" position="-4.8 2  2" rotation="0 90 0"></a-plane>
+  <a-plane src="#r2i2" width="1.3" height="1.7" position="-4.8 2  0" rotation="0 90 0"></a-plane>
+  <a-plane src="#r2i3" width="1.3" height="1.7" position="-4.8 2 -2" rotation="0 90 0"></a-plane>
+
+  <!-- right cluster -->
+  <a-plane src="#r2i4" width="1.4" height="1.7" position="4.8 2  2" rotation="0 -90 0"></a-plane>
+  <a-plane src="#r2i5" width="1.4" height="1.7" position="4.8 2  0" rotation="0 -90 0"></a-plane>
+  <a-plane src="#r2i6" width="1.4" height="1.7" position="4.8 2 -2" rotation="0 -90 0"></a-plane>
+
+  <!-- floor slab -->
+  <a-box width="3" height="0.3" depth="1" position="0 0.3 2" material="src: #tex-wood2"></a-box>
+  <a-plane src="#r2i7" rotation="-90 0 0" position="0 0.42 2" width="2.8" height="0.9"></a-plane>
+
+  <!-- back wall image fixes -->
+  <a-plane src="#r2i8"
+           width="2.1" height="2.5"
+           position="0 2 4.8"
+           rotation="0 180 0"></a-plane>
+</a-entity>
 
   <!-- =======================
        ROOM 3 (EAST)
