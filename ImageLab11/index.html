@@ -124,13 +124,17 @@
 
 <!-- HUB TITLE TEXT -->
 <a-entity
-  text="value: Idrees Nait Project 3 | High School Through College Sketchbook; 
-        color: white; 
+  text="value: Idrees Nait Project 3 | High School Through College Sketchbook;
+        color: white;
         width: 6;
-        align: center;"
+        align: center;
+        shader: msdf;
+        negate: false;"
   position="0 3 -4"
-  rotation="0 0 0">
+  material="color: black"
+  text-shadow="offset: 0.03 0.03; color: black;">
 </a-entity>
+
 
   <!-- Floor -->
   <a-box
@@ -287,8 +291,8 @@
     <!-- art -->
     <a-plane src="#r3cover" width="2" height="2.5" position="0 2 -4.8"></a-plane>
 
-    <a-box width="2" height="0.8" depth="1" position="0 0.4 1.5" material="src: #tex-marble"></a-box>
-    <a-plane src="#r3i1" rotation="-90 0 0" position="0 0.8 1.5" width="1.9" height="0.9"></a-plane>
+    <a-box width="1" height="0.8" depth="2" position="0 0.4 1.5" material="src: #tex-marble"></a-box>
+    <a-plane src="#r3i1" rotation="-90 0 0" position="0 0.8 1.5" width=".9" height="1.9"></a-plane>
 
     <a-plane src="#r3i2" width="1.3" height="1.6" position="-4.8 2 0" rotation="0 90 0"></a-plane>
     <a-plane src="#r3i3" width="1.3" height="1.6" position=" 4.8 2 0" rotation="0 -90 0"></a-plane>
@@ -342,8 +346,8 @@
     <a-box width="12" height="0.1" depth="12" position="0 4 0" color="#000000"></a-box>
 
     <!-- front wall split -->
-    <a-box width="3" height="4" depth="0.1" position="-3.5 2 -6" color="#000000"></a-box>
-    <a-box width="3" height="4" depth="0.1" position=" 3.5 2 -6" color="#000000"></a-box>
+    <a-box width=".5" height="4" depth="0.1" position="-3.5 2 -6" color="#000000"></a-box>
+    <a-box width=".5" height="4" depth="0.1" position=" 3.5 2 -6" color="#000000"></a-box>
 
     <!-- back + sides (no rotation) -->
     <a-box width="12" height="4" depth="0.1" position="0 2 6" color="#000000"></a-box>
